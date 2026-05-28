@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Seed Control Unit · Crush Resistance at Harvest · Redekop</title>
+
+<!-- ============================================================
+     JS-referenced resources lifted to window.__resources.
+     Paths point at the compressed assets-bundle/ versions so
+     the inlined HTML stays under the 30 MB upload ceiling.
+     ============================================================ -->
+<meta name="ext-resource-dependency" content="assets/logos/redekop-on-white.png" data-resource-id="logoWhite" />
+<meta name="ext-resource-dependency" content="assets/logos/redekop-on-black.png" data-resource-id="logoBlack" />
+<meta name="ext-resource-dependency" content="assets-bundle/hero-flag.jpg" data-resource-id="heroFlag" />
+<meta name="ext-resource-dependency" content="assets/scu/icon-maintenance.png" data-resource-id="iconMaintenance" />
+<meta name="ext-resource-dependency" content="assets/scu/icon-finances.png" data-resource-id="iconFinances" />
+<meta name="ext-resource-dependency" content="assets/scu/icon-yields.png" data-resource-id="iconYields" />
+<meta name="ext-resource-dependency" content="assets-bundle/how-it-works-poster.jpg" data-resource-id="howItWorksVideo" />
+<meta name="ext-resource-dependency" content="assets-bundle/integrated-design-poster.jpg" data-resource-id="integratedDesignVideo" />
+<meta name="ext-resource-dependency" content="assets-bundle/easy-access.jpg" data-resource-id="easyAccess" />
+<meta name="ext-resource-dependency" content="assets-bundle/mill-design.jpg" data-resource-id="millDesign" />
+<meta name="ext-resource-dependency" content="assets-bundle/drive-engage.jpg" data-resource-id="driveEngage" />
+<meta name="ext-resource-dependency" content="assets-bundle/integrated-monitoring.jpg" data-resource-id="integratedMonitoring" />
+<meta name="ext-resource-dependency" content="assets-bundle/wheat-sunset.jpg" data-resource-id="wheatSunset" />
+<meta name="ext-resource-dependency" content="assets-bundle/cta-aerial-tracks.jpg" data-resource-id="ctaAerial" />
+
+<link rel="stylesheet" href="styles/redekop.css" />
+<link rel="stylesheet" href="styles/site.css" />
+<link rel="stylesheet" href="styles/scu.css" />
+<style>
+  /* Override the big CSS-referenced photos in scu.css / site.css with
+     compressed assets-bundle/ versions. These declarations come AFTER
+     the stylesheets above, so they win on specificity tie. */
+  .scu-hero::before {
+    background-image: url("assets-bundle/hero-combines-aerial.jpg") !important;
+  }
+  .scu-break .bg {
+    background-image: url("assets-bundle/break-golden-combine.jpg") !important;
+  }
+  .hero-img {
+    background-image: url("assets-bundle/combine-x9-field.jpg") !important;
+  }
+  .x9-image {
+    background: #1a1517 url("assets-bundle/combine-x9-yard.jpg") center/cover no-repeat !important;
+  }
+  .dealer-img {
+    background-image: url("assets-bundle/combine-x9-yard.jpg") !important;
+  }
+</style>
+<style>
+  @font-face {
+    font-family: "Bebas Neue";
+    src: url("fonts/BebasNeue-Cyrillic.ttf") format("truetype");
+    font-weight: 400 700;
+    font-display: swap;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; color: var(--fg); }
+  body { font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+</style>
+
+<!-- Loading splash / no-JS fallback -->
+<template id="__bundler_thumbnail" data-bg-color="#231E20">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(960 140)">
+      <rect x="0" y="0"   width="180" height="14" fill="#FFC726"/>
+      <rect x="0" y="26"  width="180" height="14" fill="#FFD45A"/>
+      <rect x="0" y="52"  width="180" height="14" fill="#FFC726"/>
+      <rect x="0" y="78"  width="180" height="14" fill="#FFD45A"/>
+      <rect x="0" y="104" width="180" height="14" fill="#FFC726"/>
+      <rect x="0" y="130" width="180" height="14" fill="#FFD45A"/>
+    </g>
+    <rect x="120" y="280" width="64" height="6" fill="#FFC726"/>
+    <text x="120" y="380"
+          font-family="Impact, 'Bebas Neue', sans-serif"
+          font-size="120" font-weight="700"
+          fill="#FFFFFF" letter-spacing="-2">SEED CONTROL</text>
+    <text x="120" y="510"
+          font-family="Impact, 'Bebas Neue', sans-serif"
+          font-size="120" font-weight="700"
+          fill="#FFC726" letter-spacing="-2">UNIT.</text>
+    <g transform="translate(120 620)">
+      <circle cx="0"  cy="0" r="6" fill="#FFC726"/>
+      <circle cx="22" cy="0" r="6" fill="#FFC726" opacity="0.55"/>
+      <circle cx="44" cy="0" r="6" fill="#FFC726" opacity="0.3"/>
+    </g>
+    <text x="120" y="680"
+          font-family="Arial, sans-serif"
+          font-size="22" font-weight="700"
+          fill="#A8A4A6" letter-spacing="6">REDEKOP MANUFACTURING</text>
+  </svg>
+</template>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="components/Header.standalone.jsx"></script>
+  <script type="text/babel" src="components/Footer.standalone.jsx"></script>
+  <script type="text/babel" src="components/scu/SCUPage.standalone.jsx"></script>
+  <script type="text/babel" src="components/scu/SCUApp.standalone.jsx"></script>
+</body>
+</html>
