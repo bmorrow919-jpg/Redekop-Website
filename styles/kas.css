@@ -1,0 +1,771 @@
+/* ============================================================
+   KAS PRE-CLEANER PAGE — local styles
+   Modeled on the MAV/blade vocabulary for visual continuity.
+   ============================================================ */
+
+/* ----- placeholder slot ----- */
+.kas .slot {
+  position: relative;
+  background: var(--ink-50);
+  background-image: repeating-linear-gradient(135deg, transparent 0 12px, rgba(0,0,0,0.045) 12px 13px);
+  border: 1px dashed var(--ink-300);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px; text-align: center; padding: 28px;
+  color: var(--ink-500);
+  min-height: 100%;
+}
+.kas .slot.dark {
+  background: rgba(255,255,255,0.02);
+  background-image: repeating-linear-gradient(135deg, transparent 0 12px, rgba(255,255,255,0.04) 12px 13px);
+  border-color: var(--ink-700);
+  color: var(--ink-400);
+}
+.kas .slot .tag {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--redekop-yellow);
+}
+.kas .slot .file {
+  font-family: var(--font-mono, ui-monospace, Menlo, monospace);
+  font-size: 13px;
+}
+
+/* ============================================================
+   1. HERO
+   ============================================================ */
+.kas-hero {
+  position: relative;
+  background: var(--redekop-black);
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+  border-bottom: 6px solid var(--redekop-yellow);
+}
+.kas-hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  z-index: 0;
+  background-color: #1d191b;
+  background-image: url("../assets/kas/hero-sunset.jpg");
+  background-size: cover;
+  background-position: center 55%;
+  background-repeat: no-repeat;
+  filter: contrast(1.06) saturate(1.05);
+  transform: scale(1.02);
+}
+.kas-hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(35,30,32,0.85) 0%,
+      rgba(35,30,32,0.65) 40%,
+      rgba(35,30,32,0.35) 70%,
+      rgba(35,30,32,0.55) 100%
+    ),
+    linear-gradient(180deg, rgba(35,30,32,0) 60%, rgba(35,30,32,0.5) 100%);
+  pointer-events: none;
+}
+.kas-hero .wrap {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 60px;
+  padding-top: 64px;
+  padding-bottom: 96px;
+  align-items: center;
+}
+@media (max-width: 980px) {
+  .kas-hero .wrap { grid-template-columns: 1fr; padding-top: 80px; padding-bottom: 60px; }
+}
+
+.kas-hero .stripes-corner {
+  position: absolute;
+  top: 28px; left: 40px;
+  z-index: 3;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.kas-hero .stripes-corner i {
+  display: block; width: 56px; height: 5px; background: var(--redekop-yellow);
+}
+.kas-hero .stripes-corner i:nth-child(odd) { background: var(--yellow-200); }
+@media (max-width: 720px) {
+  .kas-hero .stripes-corner { left: 22px; top: 22px; }
+  .kas-hero .stripes-corner i { width: 40px; height: 4px; }
+}
+
+.kas-hero .breadcrumb {
+  font-family: var(--font-body);
+  font-weight: 700; font-size: 12px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-300);
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.kas-hero .breadcrumb a { color: var(--ink-300); }
+.kas-hero .breadcrumb a:hover { color: var(--redekop-yellow); }
+.kas-hero .breadcrumb .sep { color: var(--ink-600); }
+.kas-hero .breadcrumb .here { color: var(--redekop-yellow); }
+
+.kas-hero .product {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 2.2vw, 28px);
+  line-height: 1; letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--redekop-yellow);
+  margin-bottom: 14px;
+}
+.kas-hero .product::before {
+  content: ""; display: inline-block;
+  width: 36px; height: 2px; background: var(--redekop-yellow);
+}
+
+.kas-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(48px, 7vw, 100px);
+  line-height: 0.92;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 22px;
+  letter-spacing: -0.005em;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+}
+.kas-hero h1 .y { color: var(--redekop-yellow); }
+
+.kas-hero p.sub {
+  font-family: var(--font-body);
+  font-size: 18px; line-height: 1.6;
+  color: var(--ink-200);
+  margin: 0 0 28px; max-width: 560px;
+}
+.kas-hero .ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+.kas-hero .hero-meta {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--ink-700);
+  padding-top: 22px;
+  max-width: 560px;
+}
+@media (max-width: 540px) {
+  .kas-hero .hero-meta { grid-template-columns: 1fr 1fr; }
+  .kas-hero .hero-meta .cell:last-child { grid-column: span 2; }
+}
+.kas-hero .hero-meta .cell {
+  padding-right: 18px;
+  border-right: 1px solid var(--ink-700);
+}
+.kas-hero .hero-meta .cell:last-child { border-right: 0; padding-left: 18px; padding-right: 0; }
+.kas-hero .hero-meta .cell:not(:first-child) { padding-left: 18px; }
+.kas-hero .hero-meta .k {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 1;
+  color: var(--redekop-yellow);
+}
+.kas-hero .hero-meta .k small {
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 4px;
+  color: var(--yellow-200);
+}
+.kas-hero .hero-meta .lbl {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-400);
+  margin-top: 8px;
+}
+
+.kas-hero .art {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.kas-hero .art img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: rotate(-8deg) scale(1.25);
+  filter: drop-shadow(0 28px 40px rgba(0,0,0,0.55));
+}
+@media (max-width: 980px) {
+  .kas-hero .art img { transform: rotate(-4deg) scale(1.05); }
+}
+
+/* ============================================================
+   2. THE KAS DIFFERENCE — 4 pillars
+   ============================================================ */
+.kas-diff {
+  background: #fff;
+  padding: 110px 0;
+  border-bottom: 1px solid var(--ink-200);
+}
+.kas-diff .head { margin-bottom: 48px; max-width: 1080px; }
+.kas-diff h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 4.2vw, 56px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--redekop-black);
+  margin: 14px 0 18px;
+  text-wrap: balance;
+}
+.kas-diff h2 .y { color: var(--redekop-yellow); }
+.kas-diff .lead {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-600);
+  margin: 0;
+  max-width: 720px;
+}
+
+.kas-diff .grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--ink-200);
+  border-bottom: 1px solid var(--ink-200);
+}
+@media (max-width: 980px) { .kas-diff .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .kas-diff .grid { grid-template-columns: 1fr; } }
+.kas-diff .cell {
+  padding: 36px 28px 32px;
+  border-right: 1px solid var(--ink-200);
+  position: relative;
+  display: flex; flex-direction: column;
+}
+.kas-diff .cell:last-child { border-right: 0; }
+@media (max-width: 980px) {
+  .kas-diff .cell:nth-child(2n) { border-right: 0; }
+  .kas-diff .cell:nth-child(1), .kas-diff .cell:nth-child(2) { border-bottom: 1px solid var(--ink-200); }
+}
+@media (max-width: 540px) {
+  .kas-diff .cell { border-right: 0; border-bottom: 1px solid var(--ink-200); }
+  .kas-diff .cell:last-child { border-bottom: 0; }
+}
+.kas-diff .cell .num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  color: var(--redekop-yellow);
+}
+.kas-diff .cell h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin: 12px 0 14px;
+  color: var(--redekop-black);
+}
+.kas-diff .cell .rule {
+  width: 48px; height: 2px;
+  background: var(--redekop-yellow);
+  margin-bottom: 16px;
+}
+.kas-diff .cell p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-600);
+  margin: 0;
+}
+
+/* ============================================================
+   3. PROOF — two side-by-side bar charts
+   ============================================================ */
+.kas-proof {
+  background: var(--ink-50);
+  padding: 110px 0;
+}
+.kas-proof .head {
+  display: flex;
+  align-items: flex-end; justify-content: space-between;
+  gap: 30px; flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.kas-proof h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--redekop-black);
+  margin: 14px 0 0;
+}
+
+.kas-proof .grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+}
+@media (max-width: 900px) { .kas-proof .grid { grid-template-columns: 1fr; } }
+
+.kas-proof .card {
+  background: #fff;
+  border: 1px solid var(--ink-200);
+  padding: 38px 36px 32px;
+  box-shadow: var(--shadow-flat);
+}
+.kas-proof .card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(26px, 2.8vw, 36px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--redekop-black);
+  margin: 0 0 8px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--redekop-yellow);
+}
+.kas-proof .card .sub {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink-500);
+  margin: 14px 0 22px;
+  letter-spacing: 0.04em;
+}
+.kas-proof .card .foot {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--ink-500);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-top: 1px dashed var(--ink-200);
+  padding-top: 14px;
+  margin-top: 14px;
+}
+
+/* ----- bars ----- */
+.kas-proof .bars {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  height: 280px;
+  padding: 0 8px;
+  border-left: 1px solid var(--ink-200);
+  border-bottom: 1px solid var(--ink-200);
+  position: relative;
+}
+.kas-proof .bars .col {
+  display: flex; flex-direction: column;
+  align-items: stretch; justify-content: flex-end;
+  position: relative;
+  padding-bottom: 32px;
+}
+.kas-proof .bars .track {
+  flex: 1;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+}
+.kas-proof .bars .bar {
+  position: relative;
+  width: 100%;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 10px;
+  transform-origin: bottom center;
+  animation: kasBarGrow 1100ms var(--ease-out) both;
+}
+@keyframes kasBarGrow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+.kas-proof .bars .bar.shade-ink-500 { background: var(--ink-500); }
+.kas-proof .bars .bar.shade-ink-300 { background: var(--ink-300); }
+.kas-proof .bars .bar.shade-black   { background: var(--redekop-black); }
+.kas-proof .bars .bar.shade-yellow  { background: var(--redekop-yellow); }
+
+.kas-proof .bars .val {
+  display: flex; flex-direction: column; align-items: center;
+  line-height: 1;
+}
+.kas-proof .bars .val .num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 2.4vw, 30px);
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+.kas-proof .bars .val .unit {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  margin-top: 4px;
+}
+.kas-proof .bars .shade-ink-300 .val .num { color: var(--redekop-black); }
+.kas-proof .bars .shade-ink-300 .val .unit { color: rgba(0,0,0,0.65); }
+.kas-proof .bars .shade-yellow .val .num { color: var(--redekop-black); }
+.kas-proof .bars .shade-yellow .val .unit { color: rgba(0,0,0,0.7); }
+.kas-proof .bars .col.is-winner .val .num { font-size: clamp(26px, 2.8vw, 36px); }
+
+.kas-proof .bars .label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  text-align: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  line-height: 1.3;
+}
+.kas-proof .bars .col.is-winner .label { color: var(--redekop-black); }
+
+/* ============================================================
+   4. EFFICIENCY CHART
+   ============================================================ */
+.kas-eff {
+  background: var(--redekop-black);
+  color: #fff;
+  padding: 110px 0;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.kas-eff::before {
+  content: "";
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse at 70% -10%, rgba(238,185,75,0.10) 0%, rgba(238,185,75,0) 60%);
+  pointer-events: none;
+}
+.kas-eff .wrap { position: relative; z-index: 2; }
+.kas-eff .head {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  align-items: end; margin-bottom: 48px;
+}
+@media (max-width: 900px) { .kas-eff .head { grid-template-columns: 1fr; gap: 20px; } }
+.kas-eff h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 4.2vw, 60px);
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 14px 0 0;
+  color: #fff;
+}
+.kas-eff h2 .y { color: var(--redekop-yellow); }
+.kas-eff p.lead {
+  font-family: var(--font-body);
+  font-size: 16px; line-height: 1.6;
+  color: var(--ink-200);
+  margin: 0;
+  max-width: 480px;
+  justify-self: end;
+}
+@media (max-width: 900px) { .kas-eff p.lead { justify-self: start; } }
+
+.kas-eff .chart-wrap {
+  display: grid; grid-template-columns: 1.6fr 1fr; gap: 36px;
+  align-items: center;
+}
+@media (max-width: 900px) { .kas-eff .chart-wrap { grid-template-columns: 1fr; } }
+.kas-eff .chart {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--ink-700);
+  padding: 22px 18px 12px;
+}
+.kas-eff .chart svg { display: block; width: 100%; height: auto; }
+
+.kas-eff .legend {
+  display: flex; flex-direction: column;
+  gap: 12px;
+}
+.kas-eff .legend .key {
+  display: grid;
+  grid-template-columns: 16px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid;
+  border-image: linear-gradient(180deg, var(--redekop-yellow), var(--yellow-700)) 1;
+}
+.kas-eff .legend .swatch {
+  width: 14px; height: 14px;
+  border-radius: 50px;
+  display: block;
+}
+.kas-eff .legend .name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.kas-eff .legend .range {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--ink-300);
+}
+
+/* ============================================================
+   5. SPECS TABLE
+   ============================================================ */
+.kas-specs {
+  background: #fff;
+  padding: 110px 0;
+}
+.kas-specs .head { margin-bottom: 40px; max-width: 720px; }
+.kas-specs h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 4.2vw, 56px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--redekop-black);
+  margin: 14px 0 18px;
+}
+.kas-specs h2 .y { color: var(--redekop-yellow); }
+.kas-specs .lead {
+  font-family: var(--font-body);
+  font-size: 16px; line-height: 1.6;
+  color: var(--ink-600);
+  margin: 0;
+}
+
+.kas-specs .table-wrap {
+  border: 1px solid var(--ink-200);
+  overflow-x: auto;
+  box-shadow: var(--shadow-flat);
+}
+.kas-specs table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  min-width: 720px;
+}
+.kas-specs thead tr:first-child th {
+  background: var(--redekop-black);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 14px 12px;
+  text-align: center;
+  border-right: 1px solid #3E3A3C;
+}
+.kas-specs thead tr:first-child th:last-child { border-right: 0; }
+.kas-specs thead tr.units th {
+  background: var(--redekop-yellow);
+  color: var(--redekop-black);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 9px 8px;
+  text-align: center;
+  border-right: 1px solid rgba(0,0,0,0.12);
+}
+.kas-specs thead tr.units th:last-child { border-right: 0; }
+.kas-specs tbody td {
+  padding: 14px 12px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--redekop-black);
+  border-right: 1px solid var(--ink-200);
+  border-bottom: 1px solid var(--ink-200);
+  font-weight: 700;
+}
+.kas-specs tbody td:last-child { border-right: 0; }
+.kas-specs tbody tr:last-child td { border-bottom: 0; }
+.kas-specs tbody tr:nth-child(even) td { background: var(--ink-50); }
+.kas-specs tbody td.dim { color: var(--ink-500); font-weight: 400; }
+.kas-specs tbody td.cfm { font-family: var(--font-display); font-size: 17px; letter-spacing: 0.02em; }
+.kas-specs tbody td.m {
+  padding-left: 0; padding-right: 0;
+  text-align: left;
+}
+.kas-specs tbody td.m .chip {
+  display: inline-block;
+  background: var(--redekop-black);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  padding: 8px 14px 7px 18px;
+  position: relative;
+}
+.kas-specs tbody td.m .chip::before {
+  content: "";
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px; background: var(--redekop-yellow);
+}
+
+/* ============================================================
+   6. TESTIMONIALS
+   ============================================================ */
+.kas-quotes {
+  background: var(--ink-50);
+  padding: 110px 0;
+  position: relative;
+}
+.kas-quotes::before {
+  /* echo of the production page top-stripe pattern */
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--redekop-yellow) 0 56px,
+      var(--yellow-200)    56px 112px);
+}
+.kas-quotes .head { margin-bottom: 40px; max-width: 800px; }
+.kas-quotes h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 4.2vw, 56px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--redekop-black);
+  margin: 14px 0 0;
+}
+.kas-quotes h2 .y { color: var(--redekop-yellow); }
+
+.kas-quotes .grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+@media (max-width: 900px) { .kas-quotes .grid { grid-template-columns: 1fr; } }
+.kas-quotes .card {
+  background: #fff;
+  border: 1px solid var(--ink-200);
+  padding: 32px 28px 26px;
+  display: flex; flex-direction: column;
+  box-shadow: var(--shadow-flat);
+  position: relative;
+}
+.kas-quotes .card::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -1px;
+  height: 4px; background: var(--redekop-yellow);
+  transform: scaleX(0.4);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease-out);
+}
+.kas-quotes .card:hover::after { transform: scaleX(1); }
+.kas-quotes .card .mark {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 0.6;
+  color: var(--redekop-yellow);
+  margin-bottom: 6px;
+}
+.kas-quotes blockquote {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-700);
+  flex: 1;
+}
+.kas-quotes .rule {
+  width: 40px; height: 2px;
+  background: var(--redekop-yellow);
+  margin: 22px 0 14px;
+}
+.kas-quotes .attr .name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--redekop-black);
+}
+.kas-quotes .attr .role {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--ink-500);
+  margin-top: 4px;
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   7. CTA STRIP — Interested?
+   ============================================================ */
+.kas-cta {
+  position: relative;
+  background: var(--redekop-black);
+  color: #fff;
+  padding: 120px 0 130px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.kas-cta::before {
+  content: "";
+  position: absolute; inset: 0; z-index: 0;
+  background-image: url("../assets/kas/cta-aerial.jpg");
+  background-size: cover;
+  background-position: center 50%;
+  filter: contrast(1.06) saturate(1.05);
+  transform: scale(1.02);
+}
+.kas-cta::after {
+  content: "";
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(35,30,32,0.78) 0%, rgba(35,30,32,0.55) 40%, rgba(35,30,32,0.82) 100%);
+  pointer-events: none;
+}
+.kas-cta .wrap { position: relative; z-index: 2; }
+.kas-cta .stripes {
+  display: flex; gap: 6px;
+  margin-bottom: 48px;
+}
+.kas-cta .stripes i {
+  flex: 1; height: 7px;
+  background: var(--redekop-yellow);
+}
+.kas-cta .stripes i:nth-child(even) { background: var(--yellow-200); }
+.kas-cta h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(56px, 8vw, 120px);
+  line-height: 0.92;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 18px;
+  text-align: center;
+  letter-spacing: -0.005em;
+}
+.kas-cta h2 .y { color: var(--redekop-yellow); }
+.kas-cta p {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink-200);
+  margin: 0 auto 36px;
+  text-align: center; max-width: 760px;
+}
+.kas-cta .buttons {
+  display: flex; gap: 18px; flex-wrap: wrap; justify-content: center;
+}
