@@ -2,7 +2,7 @@
 function Careers2App() {
   return (
     <div className="careers2-page">
-      <Header />
+      <Header overlay />
       <Careers2Page />
       <Footer />
     </div>

@@ -3,7 +3,7 @@
 function App() {
   return (
     <React.Fragment>
-      <Header />
+      <Header overlay />
       <Hero />
       <Marquee />
       <Products />

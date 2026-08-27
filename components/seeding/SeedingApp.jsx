@@ -2,7 +2,7 @@
 function SeedingApp() {
   return (
     <div className="seeding-page">
-      <Header />
+      <Header overlay />
       <SeedingPage />
       <Footer />
     </div>
