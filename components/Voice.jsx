@@ -2,7 +2,8 @@
 
 function Voice() {
   return (
-    <section className="alt" data-screen-label="About / Voice">
+    <section className="alt voice-sec" data-screen-label="About / Voice">
+      <div className="voice-map" aria-hidden="true"><WorldMap /></div>
       <div className="wrap">
         <span className="sec-idx">03 · Engineering, the Redekop way</span>
         <div className="voice-grid" style={{ marginTop: 22 }}>
@@ -26,6 +27,11 @@ function Voice() {
               <li>OEM-integrated where it matters; bolt-in everywhere else</li>
               <li>Field-tested in Saskatchewan, Australia, Europe, and the US plains</li>
             </ul>
+
+            <div className="voice-legend">
+              <span className="sw"></span>
+              <span>Regions we operate in — North America, South America, Europe and Australia</span>
+            </div>
           </div>
         </div>
 

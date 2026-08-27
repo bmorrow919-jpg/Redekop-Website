@@ -1,4 +1,5 @@
 /* global React */
+const { useState: useStateKAS } = React;
 
 /* ---- placeholder slot ----------------------------------------------- */
 function KASSlot({ tag, file, desc, dark, style }) {
@@ -183,8 +184,141 @@ function KASProof() {
             <div className="foot">Independent A4 test dust &middot; Hours to pass 1000&nbsp;grams, 50&nbsp;g/hr feed rate</div>
           </div>
         </div>
+        <KASSavings />
       </div>
     </section>
+  );
+}
+
+/* ---- 3b. FILTER SERVICE-INTERVAL ROI CALCULATOR --------------------
+   Filter life is measured the way it is managed in the field: operating
+   hours until the element reaches the OEM restriction/service limit.
+   Two maintenance events are tracked separately — blowing the element
+   out, and replacing it — because only one of them carries a part cost.
+   The customer enters their OWN baseline intervals; the extension factor
+   stays adjustable.
+   ------------------------------------------------------------------- */
+const MINUTES_PER_SERVICE = 20;
+
+const EXTENSION_OPTIONS = [
+  { key: "2", mult: 2, label: "2\u00d7", note: "Conservative" },
+  { key: "5", mult: 5, label: "5\u00d7", note: "Test result" },
+];
+
+function KASSavings() {
+  const [hours, setHours] = useStateKAS(150);
+  const [blowInt, setBlowInt] = useStateKAS(15);
+  const [replInt, setReplInt] = useStateKAS(60);
+  const [cost, setCost] = useStateKAS(180);
+  const [ext, setExt] = useStateKAS("5");
+
+  const num = (v) => (Number(v) > 0 ? Number(v) : 0);
+  const h = num(hours), bi = num(blowInt), ri = num(replInt), c = num(cost);
+  const mult = (EXTENSION_OPTIONS.find((o) => o.key === ext) || EXTENSION_OPTIONS[0]).mult;
+
+  const per = (interval) => (interval > 0 ? h / interval : 0);
+  const nowBlows = per(bi), kasBlows = per(bi * mult);
+  const nowRepls = per(ri), kasRepls = per(ri * mult);
+
+  const nowCost = nowRepls * c, kasCost = kasRepls * c;
+  const savedCost = nowCost - kasCost;
+  const nowMins = (nowBlows + nowRepls) * MINUTES_PER_SERVICE;
+  const kasMins = (kasBlows + kasRepls) * MINUTES_PER_SERVICE;
+  const savedMins = nowMins - kasMins;
+
+  const money = (v) => "$" + Math.round(v).toLocaleString();
+  const count = (v) => (v >= 10 ? Math.round(v).toLocaleString() : v.toFixed(1));
+  const duration = (mins) => {
+    if (mins <= 0) return { v: 0, u: "min" };
+    if (mins < 60) return { v: Math.round(mins), u: "min" };
+    const hrs = mins / 60;
+    return { v: hrs >= 10 ? Math.round(hrs) : Math.round(hrs * 10) / 10, u: "hrs" };
+  };
+  const savedTime = duration(savedMins);
+
+  const rows = [
+    { k: "Blow-outs per year", now: count(nowBlows), kas: count(kasBlows) },
+    { k: "Replacements per year", now: count(nowRepls), kas: count(kasRepls) },
+    { k: "Filter spend", now: money(nowCost), kas: money(kasCost) },
+    { k: "Time on filters", now: duration(nowMins).v + " " + duration(nowMins).u, kas: duration(kasMins).v + " " + duration(kasMins).u },
+  ];
+
+  return (
+    <div className="kas-save">
+      <div className="kas-save-head">
+        <span className="sec-idx">What that means in service intervals</span>
+        <h3>Fewer filter services, every season.</h3>
+        <p>Filter life is the hours you run before the element hits its recommended restriction limit. Enter your own intervals for blowing the element out and replacing it, and we extend both by the factor you choose.</p>
+      </div>
+
+      <div className="kas-save-body">
+        <div className="kas-save-inputs">
+          <div className="fld">
+            <label htmlFor="kasHours">Annual operating hours</label>
+            <input id="kasHours" type="number" min="0" step="25" value={hours} onChange={(e) => setHours(e.target.value)} />
+          </div>
+
+          <div className="fld">
+            <label htmlFor="kasBlow">Blow out the filter every (hours)</label>
+            <input id="kasBlow" type="number" min="0" step="5" value={blowInt} onChange={(e) => setBlowInt(e.target.value)} />
+          </div>
+
+          <div className="fld">
+            <label htmlFor="kasRepl">Replace the filter every (hours)</label>
+            <input id="kasRepl" type="number" min="0" step="10" value={replInt} onChange={(e) => setReplInt(e.target.value)} />
+          </div>
+
+          <div className="fld">
+            <label htmlFor="kasCost">Filter / set cost</label>
+            <div className="money-in">
+              <span>$</span>
+              <input id="kasCost" type="number" min="0" step="10" value={cost} onChange={(e) => setCost(e.target.value)} />
+            </div>
+            <span className="hint">Set your dealer price for the element or set.</span>
+          </div>
+
+          <div className="fld">
+            <span className="lbl">Filter-life extension with KAS</span>
+            <div className="seg">
+              {EXTENSION_OPTIONS.map((o) => (
+                <button type="button" key={o.key} className={ext === o.key ? "on" : ""} onClick={() => setExt(o.key)}>
+                  {o.label}<em>{o.note}</em>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="kas-save-out">
+          <div className="cmp">
+            <div className="cmp-head">
+              <span></span>
+              <span>Today</span>
+              <span className="is-kas">With KAS</span>
+            </div>
+            {rows.map((r) => (
+              <div className="cmp-row" key={r.k}>
+                <span className="k">{r.k}</span>
+                <span className="v">{r.now}</span>
+                <span className="v is-kas">{r.kas}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="saved">
+            <div className="cell">
+              <span className="k">Saved per year</span>
+              <span className="v">{money(savedCost > 0 ? savedCost : 0)}</span>
+            </div>
+            <div className="cell is-time">
+              <span className="k">Time saved</span>
+              <span className="v">{savedTime.v}<em>{savedTime.u}</em></span>
+            </div>
+          </div>
+          <p className="note">Costs and savings are estimates; field results vary with crop, soil and conditions.</p>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -195,7 +329,7 @@ function KASEfficiency() {
   const series = [
     { name: "KAS 3\"",  color: "#5CA8E8", min: 50,  max: 200,  pts: [[50,82],[80,82.5],[110,84],[140,85],[170,86.5],[200,88]] },
     { name: "KAS 4\"",  color: "#E07F3A", min: 100, max: 350,  pts: [[100,82],[150,84],[200,85.5],[250,86.5],[300,86],[350,85.5]] },
-    { name: "KAS 5\"",  color: "#231E20", min: 275, max: 550,  pts: [[275,82],[330,84.5],[400,86],[460,86.8],[510,87],[550,86.8]] },
+    { name: "KAS 5\"",  color: "#C77DD8", min: 275, max: 550,  pts: [[275,82],[330,84.5],[400,86],[460,86.8],[510,87],[550,86.8]] },
     { name: "KAS 6\"",  color: "#EEB94B", min: 400, max: 850,  pts: [[400,79],[500,82],[600,83.5],[700,84],[780,84.2],[850,84]] },
     { name: "KAS 8\"",  color: "#3F8B3F", min: 800, max: 1400, pts: [[800,77],[950,81.5],[1100,82.5],[1250,82.8],[1400,82.5]] },
   ];
@@ -276,13 +410,131 @@ function KASEfficiency() {
 }
 
 /* ---- 5. SPECS TABLE ------------------------------------------------- */
+/* Sizing calculator: peak HP or known airflow in, estimated CFM and a
+   model recommendation out. Same 2.104 CFM/HP basis as the catalogue. */
+const CFM_PER_HP = 2.104;
+const SCAVENGER_UPLIFT = 0.10;
+const SIZING_MODELS = [
+  { pn: "KAS-004", size: "4 Inch", cfm: [100, 350] },
+  { pn: "KAS-005", size: "5 Inch", cfm: [275, 550] },
+  { pn: "KAS-006", size: "6 Inch", cfm: [400, 850] },
+  { pn: "KAS-008", size: "8 Inch", cfm: [800, 1500] },
+];
+
+function KASSizer() {
+  const [mode, setMode] = useStateKAS("hp");
+  const [val, setVal] = useStateKAS("");
+  const [scav, setScav] = useStateKAS("no");
+
+  const v = parseFloat(val);
+  const ready = val.toString().trim() !== "" && !isNaN(v) && v > 0;
+  const uplift = scav === "yes";
+  const hp = ready ? (mode === "hp" ? v : v / CFM_PER_HP) : 0;
+  const base = ready ? (mode === "hp" ? v * CFM_PER_HP : v) : 0;
+  const cfm = uplift ? base * (1 + SCAVENGER_UPLIFT) : base;
+
+  const fits = SIZING_MODELS.filter((m) => cfm >= m.cfm[0] && cfm <= m.cfm[1]);
+  const best = fits.slice().sort((a, b) => {
+    const ca = (a.cfm[0] + a.cfm[1]) / 2, cb = (b.cfm[0] + b.cfm[1]) / 2;
+    return Math.abs(cfm - ca) - Math.abs(cfm - cb);
+  })[0];
+  const n = (x) => Math.round(x).toLocaleString();
+
+  return (
+    <div className="kas-sizer">
+      <div className="kas-sizer-head">
+        <span className="sec-idx">Estimate your intake air flow</span>
+        <h3>Not sure of your airflow?</h3>
+        <p>Enter what you know and we&apos;ll estimate the rest, then point you at the model sized for it.</p>
+      </div>
+
+      <div className="kas-sizer-body">
+        <div className="kas-sizer-inputs">
+          <div className="fld">
+            <span className="lbl"><i>1.</i> What do you know?</span>
+            <div className="seg">
+              <button type="button" className={mode === "hp" ? "on" : ""} onClick={() => setMode("hp")}>Peak horsepower</button>
+              <button type="button" className={mode === "cfm" ? "on" : ""} onClick={() => setMode("cfm")}>Airflow (CFM)</button>
+            </div>
+            <input
+              type="number" min="0" step="10" inputMode="decimal"
+              placeholder={mode === "hp" ? "e.g. 350" : "e.g. 736"}
+              value={val}
+              onChange={(e) => setVal(e.target.value)}
+              aria-label={mode === "hp" ? "Peak horsepower, diesel" : "Engine airflow in CFM"}
+            />
+          </div>
+
+          <div className="fld">
+            <label htmlFor="kasScav" className="lbl"><i>2.</i> Does your equipment have an intake cleaner with a scavenger port to the exhaust or a blower?</label>
+            <select id="kasScav" value={scav} onChange={(e) => setScav(e.target.value)}>
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="kas-sizer-out">
+          {!ready ? (
+            <p className="placeholder">Enter your {mode === "hp" ? "peak horsepower" : "engine airflow"} to see your estimated intake air flow and recommended pre-cleaner.</p>
+          ) : (
+            <React.Fragment>
+              <div className="stats">
+                <div className="stat is-big">
+                  <span className="k">Estimated intake air flow</span>
+                  <span className="v">{n(cfm)}<em>cfm</em></span>
+                </div>
+                <div className="stat">
+                  <span className="k">{mode === "hp" ? "Peak horsepower" : "Equivalent horsepower"}</span>
+                  <span className="v">{n(hp)}<em>hp</em></span>
+                </div>
+              </div>
+              {uplift && <p className="adj">{n(base)} CFM engine demand, adjusted for the scavenger port or blower.</p>}
+
+              {best ? (
+                <div className="rec">
+                  <span className="k">Recommended</span>
+                  <div className="rec-body">
+                    <img className="rec-img" src="assets/products/kas-prefilter.png" alt="Redekop KAS pre-cleaner" />
+                    <div className="rec-copy">
+                      <div className="chips">
+                        <span className="chip is-best">{best.pn}<em>{best.size}</em></span>
+                        {fits.filter((m) => m !== best).map((m) => (
+                          <span className="chip" key={m.pn}>{m.pn}<em>{m.size}</em></span>
+                        ))}
+                      </div>
+                      <p>
+                        {fits.length > 1
+                          ? <React.Fragment><strong>{best.pn}</strong> is the closest match at {n(cfm)} CFM. The other model shown also covers this airflow &mdash; intake pipe diameter decides which one you order.</React.Fragment>
+                          : <React.Fragment><strong>{best.pn}</strong> covers {best.cfm[0].toLocaleString()}&ndash;{best.cfm[1].toLocaleString()} CFM. Match it to your intake pipe diameter ({best.size}) to confirm.</React.Fragment>}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="rec">
+                  <p>
+                    {cfm > SIZING_MODELS[SIZING_MODELS.length - 1].cfm[1]
+                      ? "That airflow is above the KAS range (max 1,500 CFM). Multiple units can be manifolded \u2014 talk to our team and we\u2019ll size it with you."
+                      : "That airflow is below the smallest KAS unit (100 CFM). Talk to our team and we\u2019ll confirm the right fit."}
+                  </p>
+                </div>
+              )}
+            </React.Fragment>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function KASSpecs() {
   const rows = [
-    { m: "KAS-003", cfm: "65 – 190",   inIn: "3.05", inMm: "77.4", odIn: "6.49",  odMm: "165", hIn: "5.13",  hMm: "130", lbs: "1.65", kg: "0.75" },
-    { m: "KAS-004", cfm: "100 – 350",  inIn: "4.04", inMm: "102",  odIn: "8.50",  odMm: "216", hIn: "6.77",  hMm: "172", lbs: "2.9",  kg: "1.30" },
-    { m: "KAS-005", cfm: "275 – 550",  inIn: "5.04", inMm: "128",  odIn: "10.63", odMm: "270", hIn: "8.46",  hMm: "215", lbs: "5.1",  kg: "2.33" },
-    { m: "KAS-006", cfm: "400 – 850",  inIn: "6.06", inMm: "154",  odIn: "12.80", odMm: "325", hIn: "10.12", hMm: "257", lbs: "8.1",  kg: "3.66" },
-    { m: "KAS-008", cfm: "800 – 1500", inIn: "8.06", inMm: "205",  odIn: "17.42", odMm: "442", hIn: "13.77", hMm: "350", lbs: "15.5", kg: "7.03" },
+    { m: "KAS-003", cfm: "65 – 190",   hp: "—",        inIn: "3.05", inMm: "77.4", odIn: "6.49",  odMm: "165", hIn: "5.13",  hMm: "130", lbs: "1.65", kg: "0.75" },
+    { m: "KAS-004", cfm: "100 – 350",  hp: "48 – 166",  inIn: "4.04", inMm: "102",  odIn: "8.50",  odMm: "216", hIn: "6.77",  hMm: "172", lbs: "2.9",  kg: "1.30" },
+    { m: "KAS-005", cfm: "275 – 550",  hp: "131 – 261", inIn: "5.04", inMm: "128",  odIn: "10.63", odMm: "270", hIn: "8.46",  hMm: "215", lbs: "5.1",  kg: "2.33" },
+    { m: "KAS-006", cfm: "400 – 850",  hp: "190 – 404", inIn: "6.06", inMm: "154",  odIn: "12.80", odMm: "325", hIn: "10.12", hMm: "257", lbs: "8.1",  kg: "3.66" },
+    { m: "KAS-008", cfm: "800 – 1500", hp: "380 – 713", inIn: "8.06", inMm: "205",  odIn: "17.42", odMm: "442", hIn: "13.77", hMm: "350", lbs: "15.5", kg: "7.03" },
   ];
   return (
     <section className="kas-specs" data-screen-label="05 Specs">
@@ -300,6 +552,7 @@ function KASSpecs() {
               <tr>
                 <th rowSpan="2" className="m">Model</th>
                 <th rowSpan="2" className="cfm">CFM Range</th>
+                <th rowSpan="2" className="cfm">HP Range</th>
                 <th colSpan="2" className="grp">Inlet Size</th>
                 <th colSpan="2" className="grp">Outside Diameter</th>
                 <th colSpan="2" className="grp">Height</th>
@@ -317,6 +570,7 @@ function KASSpecs() {
                 <tr key={r.m}>
                   <td className="m"><span className="chip">{r.m}</span></td>
                   <td className="cfm">{r.cfm}</td>
+                  <td className="cfm">{r.hp}</td>
                   <td>{r.inIn}</td><td className="dim">{r.inMm}</td>
                   <td>{r.odIn}</td><td className="dim">{r.odMm}</td>
                   <td>{r.hIn}</td><td className="dim">{r.hMm}</td>
@@ -326,6 +580,7 @@ function KASSpecs() {
             </tbody>
           </table>
         </div>
+        <KASSizer />
       </div>
     </section>
   );

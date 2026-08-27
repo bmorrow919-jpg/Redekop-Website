@@ -432,6 +432,63 @@
 .kas-proof .bars .col.is-winner .label { color: var(--redekop-black); }
 
 /* ============================================================
+   3b. FILTER SAVINGS CALCULATOR
+   ============================================================ */
+.kas-save { margin-top: 28px; background: #fff; border: 1px solid var(--ink-200); box-shadow: var(--shadow-flat); }
+.kas-save-head { padding: 32px 34px 26px; border-bottom: 1px solid var(--ink-200); }
+.kas-save-head h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.02; text-transform: uppercase; margin: 12px 0 12px; }
+.kas-save-head p { font-family: var(--font-body); font-size: 15px; line-height: 1.6; color: var(--ink-600); margin: 0; max-width: 64ch; text-wrap: pretty; }
+
+.kas-save-body { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; }
+.kas-save-inputs { padding: 30px 34px 34px; display: flex; flex-direction: column; gap: 22px; border-right: 1px solid var(--ink-200); }
+.kas-save-inputs .fld { display: flex; flex-direction: column; gap: 8px; }
+.kas-save-inputs label, .kas-save-inputs .lbl { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-500); }
+.kas-save-inputs input { width: 100%; background: var(--ink-50); border: 1px solid var(--ink-300); color: var(--redekop-black); font-family: var(--font-display); font-size: 26px; letter-spacing: 0.02em; padding: 9px 14px; outline: none; }
+.kas-save-inputs input:focus { border-color: var(--redekop-yellow); background: #fff; }
+.kas-save-inputs .money-in { display: flex; align-items: stretch; }
+.kas-save-inputs .money-in span { display: flex; align-items: center; padding: 0 12px; background: var(--redekop-black); color: var(--redekop-yellow); font-family: var(--font-display); font-size: 22px; }
+.kas-save-inputs .hint { font-family: var(--font-body); font-size: 12px; line-height: 1.5; color: var(--ink-500); }
+.kas-save-inputs .seg { display: flex; }
+.kas-save-inputs .seg button { flex: 1; background: var(--ink-50); border: 1px solid var(--ink-300); color: var(--ink-600); font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px 10px; cursor: pointer; transition: background 0.15s, color 0.15s; }
+.kas-save-inputs .seg button + button { border-left: 0; }
+.kas-save-inputs .seg button:hover { background: #fff; }
+.kas-save-inputs .seg button.on { background: var(--redekop-yellow); border-color: var(--redekop-yellow); color: var(--redekop-black); }
+.kas-save-inputs .seg button em { display: block; font-family: var(--font-body); font-style: normal; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-500); margin-top: 3px; }
+.kas-save-inputs .seg button.on em { color: rgba(0,0,0,0.62); }
+
+.kas-save-out .cmp { border: 1px solid var(--ink-200); }
+.kas-save-out .cmp-head, .kas-save-out .cmp-row { display: grid; grid-template-columns: 1.5fr 1fr 1fr; align-items: baseline; }
+.kas-save-out .cmp-head { background: var(--ink-50); border-bottom: 1px solid var(--ink-200); }
+.kas-save-out .cmp-head span { font-family: var(--font-body); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-500); padding: 11px 16px; }
+.kas-save-out .cmp-head span.is-kas { background: var(--redekop-black); color: var(--redekop-yellow); }
+.kas-save-out .cmp-row + .cmp-row { border-top: 1px solid var(--ink-200); }
+.kas-save-out .cmp-row .k { font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-600); padding: 14px 16px; }
+.kas-save-out .cmp-row .v { font-family: var(--font-display); font-size: 26px; line-height: 1; color: var(--ink-600); padding: 12px 16px; }
+.kas-save-out .cmp-row .v.is-kas { background: var(--redekop-black); color: var(--redekop-yellow); }
+
+.kas-save-out .saved { display: grid; grid-template-columns: 1.4fr 1fr; background: var(--redekop-yellow); }
+.kas-save-out .saved .cell { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; }
+.kas-save-out .saved .cell.is-time { border-left: 1px solid rgba(0,0,0,0.18); }
+.kas-save-out .saved .k { font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.7); }
+.kas-save-out .saved .v { font-family: var(--font-display); font-weight: 700; font-size: clamp(34px, 4vw, 54px); line-height: 1; color: var(--redekop-black); }
+.kas-save-out .saved .v em { font-family: var(--font-body); font-style: normal; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(0,0,0,0.62); margin-left: 8px; }
+.kas-save-out .note { font-family: var(--font-body); font-size: 14px; font-weight: 700; line-height: 1.6; color: var(--ink-600); margin: 0; }
+
+@media (max-width: 900px) {
+  .kas-save-body { grid-template-columns: 1fr; }
+  .kas-save-inputs { border-right: 0; border-bottom: 1px solid var(--ink-200); }
+}
+@media (max-width: 600px) {
+  .kas-save-head, .kas-save-inputs, .kas-save-out { padding-left: 22px; padding-right: 22px; }
+  .kas-save-out .cmp-head, .kas-save-out .cmp-row { grid-template-columns: 1fr 1fr; }
+  .kas-save-out .cmp-head span:first-child { display: none; }
+  .kas-save-out .cmp-row .k { grid-column: 1 / -1; padding-bottom: 0; }
+  .kas-save-out .cmp-row .v { font-size: 22px; }
+  .kas-save-out .saved { grid-template-columns: 1fr; }
+  .kas-save-out .saved .cell.is-time { border-left: 0; border-top: 1px solid rgba(0,0,0,0.18); }
+}
+
+/* ============================================================
    4. EFFICIENCY CHART
    ============================================================ */
 .kas-eff {
@@ -617,6 +674,61 @@
   content: "";
   position: absolute; left: 0; top: 0; bottom: 0;
   width: 4px; background: var(--redekop-yellow);
+}
+
+/* ----- 5b. sizing calculator ----- */
+.kas-sizer { margin-top: 28px; border: 1px solid var(--ink-200); background: #fff; box-shadow: var(--shadow-flat); }
+.kas-sizer-head { padding: 32px 34px 26px; border-bottom: 1px solid var(--ink-200); background: var(--redekop-yellow); }
+.kas-sizer-head .sec-idx { color: rgba(0,0,0,0.62); }
+.kas-sizer-head .sec-idx::after { background: rgba(0,0,0,0.28); }
+.kas-sizer-head h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.02; text-transform: uppercase; margin: 12px 0 12px; color: var(--redekop-black); }
+.kas-sizer-head p { font-family: var(--font-body); font-size: 15px; line-height: 1.6; color: rgba(0,0,0,0.72); margin: 0; max-width: 60ch; text-wrap: pretty; }
+
+.kas-sizer-body { display: grid; grid-template-columns: minmax(280px, 400px) 1fr; }
+.kas-sizer-inputs { padding: 30px 34px 34px; display: flex; flex-direction: column; gap: 26px; border-right: 1px solid var(--ink-200); }
+.kas-sizer-inputs .fld { display: flex; flex-direction: column; gap: 10px; }
+.kas-sizer-inputs .lbl { font-family: var(--font-body); font-size: 13px; font-weight: 700; line-height: 1.5; color: var(--redekop-black); }
+.kas-sizer-inputs .lbl i { font-style: normal; color: var(--yellow-700, #B2832B); margin-right: 6px; }
+.kas-sizer-inputs .seg { display: flex; }
+.kas-sizer-inputs .seg button { flex: 1; background: var(--ink-50); border: 1px solid var(--ink-300); color: var(--ink-600); font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 11px 10px; cursor: pointer; transition: background 0.15s, color 0.15s; }
+.kas-sizer-inputs .seg button + button { border-left: 0; }
+.kas-sizer-inputs .seg button:hover { background: #fff; }
+.kas-sizer-inputs .seg button.on { background: var(--redekop-yellow); border-color: var(--redekop-yellow); color: var(--redekop-black); }
+.kas-sizer-inputs input, .kas-sizer-inputs select { width: 100%; background: var(--ink-50); border: 1px solid var(--ink-300); color: var(--redekop-black); font-family: var(--font-display); font-size: 26px; letter-spacing: 0.02em; padding: 9px 14px; outline: none; }
+.kas-sizer-inputs select { font-size: 18px; padding: 12px 14px; }
+.kas-sizer-inputs input:focus, .kas-sizer-inputs select:focus { border-color: var(--redekop-yellow); background: #fff; }
+
+.kas-sizer-out { padding: 30px 34px 34px; display: flex; flex-direction: column; gap: 20px; }
+.kas-sizer-out .placeholder { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--ink-500); margin: 0; max-width: 44ch; }
+.kas-sizer-out .stats { display: flex; gap: 44px; flex-wrap: wrap; }
+.kas-sizer-out .stat { display: flex; flex-direction: column; gap: 6px; }
+.kas-sizer-out .stat .k { font-family: var(--font-body); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-500); }
+.kas-sizer-out .stat .v { font-family: var(--font-display); font-weight: 700; font-size: 34px; line-height: 1; color: var(--redekop-black); }
+.kas-sizer-out .stat.is-big .v { font-size: clamp(42px, 4.6vw, 60px); }
+.kas-sizer-out .stat .v em { font-family: var(--font-body); font-style: normal; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-500); margin-left: 8px; }
+.kas-sizer-out .adj { font-family: var(--font-body); font-size: 12px; line-height: 1.5; color: var(--ink-500); margin: -8px 0 0; }
+
+.kas-sizer-out .rec { border-top: 1px solid var(--ink-200); padding-top: 20px; display: flex; flex-direction: column; gap: 12px; }
+.kas-sizer-out .rec .k { font-family: var(--font-body); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-500); }
+.kas-sizer-out .rec-body { display: grid; grid-template-columns: 96px 1fr; gap: 24px; align-items: start; }
+.kas-sizer-out .rec-img { width: 96px; height: auto; display: block; }
+.kas-sizer-out .rec-copy { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.kas-sizer-out .rec .chips { display: flex; gap: 10px; flex-wrap: wrap; }
+.kas-sizer-out .rec .chip { display: inline-flex; align-items: baseline; gap: 8px; background: var(--ink-50); border: 1px solid var(--ink-300); color: var(--ink-600); font-family: var(--font-display); font-size: 20px; letter-spacing: 0.03em; padding: 7px 14px; }
+.kas-sizer-out .rec .chip em { font-family: var(--font-body); font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
+.kas-sizer-out .rec .chip.is-best { background: var(--redekop-yellow); border-color: var(--redekop-yellow); color: var(--redekop-black); }
+.kas-sizer-out .rec p { font-family: var(--font-body); font-size: 14px; line-height: 1.6; color: var(--ink-600); margin: 0; max-width: 56ch; text-wrap: pretty; }
+.kas-sizer-out .rec p strong { color: var(--redekop-black); font-weight: 700; }
+
+@media (max-width: 900px) {
+  .kas-sizer-body { grid-template-columns: 1fr; }
+  .kas-sizer-inputs { border-right: 0; border-bottom: 1px solid var(--ink-200); }
+}
+@media (max-width: 600px) {
+  .kas-sizer-head, .kas-sizer-inputs, .kas-sizer-out { padding-left: 22px; padding-right: 22px; }
+  .kas-sizer-out .stats { gap: 26px; }
+  .kas-sizer-out .rec-body { grid-template-columns: 68px 1fr; gap: 16px; }
+  .kas-sizer-out .rec-img { width: 68px; }
 }
 
 /* ============================================================

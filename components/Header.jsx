@@ -4,19 +4,18 @@ const { useState } = React;
 function Header() {
   const [open, setOpen] = useState(null);
   const items = [
-    { key: "weed", label: "Weed Seed Control", menu: [
+    { key: "products", label: "Products", menu: [
       { label: "Seed Control Unit", href: "scu.html" },
       { label: "BSCU", href: "bscu.html" },
-      { label: "Testing & Research", href: "research.html" },
-    ] },
-    { key: "straw", label: "Straw Choppers & Blades", menu: [
       { label: "MAV Straw Chopper", href: "mav.html" },
       { label: "Blade Conversions", href: "blade.html" },
+      { label: "KAS Pre-Cleaner", href: "kas.html" },
+      { label: "Seeding", href: "seeding.html" },
     ] },
-    { key: "kas", label: "KAS Pre-Cleaner", href: "kas.html" },
     { key: "byo", label: "Build Your Own", href: "byo.html" },
     { key: "support", label: "Support", menu: [
       { label: "Sales Network", href: "sales.html" },
+      { label: "Testing & Research", href: "research.html" },
       { label: "Manuals" },
       { label: "FAQs", href: "faq.html" },
       { label: "Warranty", href: "warranty.html" },

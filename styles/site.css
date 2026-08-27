@@ -479,6 +479,22 @@ section.dark .lead { color: var(--ink-200); }
 /* ============================================================
    VOICE / ABOUT
    ============================================================ */
+/* ============================================================
+   VOICE / ABOUT — background world map
+   ============================================================ */
+.voice-sec { position: relative; overflow: hidden; isolation: isolate; }
+.voice-sec > .wrap { position: relative; z-index: 2; }
+.voice-map { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 118%; max-width: none; z-index: 0; pointer-events: none; }
+.voice-map .world-map-svg { display: block; width: 100%; height: auto; }
+.voice-map .wm-off { fill: #E4E4E4; stroke: var(--ink-50); stroke-width: 0.6; }
+.voice-map .wm-on { fill: var(--redekop-yellow); fill-opacity: 0.42; stroke: #C9A227; stroke-width: 0.6; }
+/* keeps the copy legible over the geometry */
+.voice-sec::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, var(--ink-50) 0%, rgba(246,246,246,0.72) 26%, rgba(246,246,246,0.72) 74%, var(--ink-50) 100%); }
+
+.voice-legend { display: flex; align-items: center; gap: 12px; margin-top: 28px; font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-500); }
+.voice-legend .sw { width: 16px; height: 16px; flex-shrink: 0; background: var(--redekop-yellow); opacity: 0.42; border: 1px solid #C9A227; display: block; }
+@media (max-width: 720px) { .voice-map { width: 190%; } }
+
 .voice-grid {
   display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px;
   align-items: start;

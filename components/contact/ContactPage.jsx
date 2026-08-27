@@ -93,11 +93,90 @@ function ContactQuick() {
 }
 
 /* ---- 3. FORM + INFO ----------------------------------------------- */
+/* HubSpot form this submits into (Contact Us form, portal 49003392) */
+const CONTACT_HS = {
+  portalId: "49003392",
+  formId: "e8e2f028-cfe8-4469-a9c7-dc0c6209d310",
+};
+
+const INTEREST_LABELS = {
+  info: "General info",
+  quote: "Request a quote",
+  demo: "Book a demo",
+  dealer: "Find a dealer",
+  support: "Service / support",
+};
+
 function ContactForm() {
   const [interest, setInterest] = useContactState({
     info: true, demo: false, quote: false, dealer: false, support: false,
   });
   const toggle = (k) => setInterest((p) => ({ ...p, [k]: !p[k] }));
+
+  const [f, setF] = useContactState({
+    subject: "", firstname: "", lastname: "", email: "",
+    phone: "", location: "", combine: "", message: "",
+  });
+  const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }));
+
+  const [status, setStatus] = useContactState("idle"); // idle | sending | ok | error
+  const [errMsg, setErrMsg] = useContactState("");
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
+    setErrMsg("");
+
+    const interests = Object.keys(interest)
+      .filter((k) => interest[k])
+      .map((k) => INTEREST_LABELS[k]);
+
+    // Fold the extra structured fields into the default `message` property
+    // so nothing is lost regardless of the HubSpot form's custom fields.
+    const extra = [];
+    if (f.subject) extra.push("Subject: " + f.subject);
+    if (interests.length) extra.push("Interested in: " + interests.join(", "));
+    if (f.location) extra.push("Location: " + f.location);
+    if (f.combine) extra.push("Combine: " + f.combine);
+    const composedMessage =
+      (extra.length ? extra.join("\n") + "\n\n" : "") + (f.message || "");
+
+    try {
+      await window.submitHubSpotForm({
+        portalId: CONTACT_HS.portalId,
+        formId: CONTACT_HS.formId,
+        fields: {
+          firstname: f.firstname,
+          lastname: f.lastname,
+          email: f.email,
+          phone: f.phone,
+          message: composedMessage,
+        },
+      });
+      setStatus("ok");
+    } catch (err) {
+      setStatus("error");
+      setErrMsg(err && err.message ? err.message : "Something went wrong.");
+    }
+  };
+
+  if (status === "ok") {
+    return (
+      <section className="contact-main" data-screen-label="03 Form">
+        <div className="wrap">
+          <div className="form-col">
+            <div className="form-success" role="status">
+              <span className="sec-idx">01 · Get in touch</span>
+              <h2>Thanks{f.firstname ? ", " + f.firstname : ""}.<br/><span className="y">We&apos;ve got your message.</span></h2>
+              <p>A member of our team will be in touch within one business day. For anything urgent, call us toll free at <a href="tel:18667333567">1-866-733-3567</a>.</p>
+            </div>
+          </div>
+          <ContactInfoCol />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="contact-main" data-screen-label="03 Form">
@@ -115,7 +194,7 @@ function ContactForm() {
             </p>
           </div>
 
-          <form className="form" onSubmit={(e) => { e.preventDefault(); }}>
+          <form className="form" onSubmit={onSubmit}>
             <p className="req-note">
               <span className="req">*</span> indicates required fields
             </p>
@@ -123,40 +202,40 @@ function ContactForm() {
             <div className="row">
               <div className="field">
                 <label>Subject</label>
-                <input type="text" placeholder="e.g. SCU enquiry for X9 combine" />
+                <input type="text" placeholder="e.g. SCU enquiry for X9 combine" value={f.subject} onChange={set("subject")} />
               </div>
             </div>
 
             <div className="row two">
               <div className="field">
                 <label>First Name <span className="req">*</span></label>
-                <input type="text" required />
+                <input type="text" required value={f.firstname} onChange={set("firstname")} />
               </div>
               <div className="field">
                 <label>Last Name</label>
-                <input type="text" />
+                <input type="text" value={f.lastname} onChange={set("lastname")} />
               </div>
             </div>
 
             <div className="row two">
               <div className="field">
                 <label>Email <span className="req">*</span></label>
-                <input type="email" required />
+                <input type="email" required value={f.email} onChange={set("email")} />
               </div>
               <div className="field">
                 <label>Phone</label>
-                <input type="tel" />
+                <input type="tel" value={f.phone} onChange={set("phone")} />
               </div>
             </div>
 
             <div className="row two">
               <div className="field">
                 <label>Location</label>
-                <input type="text" placeholder="City, Province/State, Country" />
+                <input type="text" placeholder="City, Province/State, Country" value={f.location} onChange={set("location")} />
               </div>
               <div className="field">
                 <label>Combine make &amp; model</label>
-                <input type="text" placeholder="e.g. John Deere X9 1100" />
+                <input type="text" placeholder="e.g. John Deere X9 1100" value={f.combine} onChange={set("combine")} />
               </div>
             </div>
 
@@ -176,18 +255,34 @@ function ContactForm() {
             <div className="row">
               <div className="field">
                 <label>Message</label>
-                <textarea rows="5" placeholder="Tell us what you&apos;re running and what you&apos;re hoping to accomplish."></textarea>
+                <textarea rows="5" placeholder="Tell us what you&apos;re running and what you&apos;re hoping to accomplish." value={f.message} onChange={set("message")}></textarea>
               </div>
             </div>
 
             <div className="submit-row">
-              <button type="submit" className="btn-redekop"><span>Send message</span></button>
+              <button type="submit" className="btn-redekop" disabled={status === "sending"}>
+                <span>{status === "sending" ? "Sending\u2026" : "Send message"}</span>
+              </button>
               <span className="hint">We&apos;ll be in touch within one business day.</span>
             </div>
+
+            {status === "error" && (
+              <p className="form-error" role="alert">
+                We couldn&apos;t send your message{errMsg ? " (" + errMsg + ")" : ""}. Please try again, or email <a href="mailto:sales@redekopmfg.com">sales@redekopmfg.com</a>.
+              </p>
+            )}
           </form>
         </div>
 
-        {/* RIGHT — info card */}
+        <ContactInfoCol />
+      </div>
+    </section>
+  );
+}
+
+/* ---- Info column (right side), shared by form + success states ---- */
+function ContactInfoCol() {
+  return (
         <aside className="info-col">
           <div className="info-card">
             <div className="info-eyebrow">Redekop Manufacturing</div>
@@ -252,8 +347,6 @@ function ContactForm() {
             <a href="#" className="btn-redekop is-light" onClick={(e) => e.preventDefault()}><span>Sales Network</span></a>
           </div>
         </aside>
-      </div>
-    </section>
   );
 }
 

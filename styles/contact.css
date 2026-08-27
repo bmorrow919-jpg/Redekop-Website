@@ -344,6 +344,27 @@
   letter-spacing: 0.04em;
 }
 
+.form .submit-row .btn-redekop[disabled] { opacity: 0.55; cursor: default; }
+
+.form .form-error {
+  margin-top: 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #9a1b1b;
+  background: #fdecec;
+  border: 1px solid #f3c9c9;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.form .form-error a { color: #9a1b1b; text-decoration: underline; }
+
+.form-success { padding: 8px 0 4px; }
+.form-success .sec-idx { display: block; }
+.form-success h2 { margin: 10px 0 14px; }
+.form-success p { font-family: var(--font-body); color: var(--ink-600, #444); line-height: 1.6; max-width: 46ch; }
+.form-success p a { text-decoration: underline; }
+
 /* ============================================================
    4. INFO SIDEBAR
    ============================================================ */

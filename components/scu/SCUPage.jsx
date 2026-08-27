@@ -27,6 +27,7 @@ function SCUHero() {
             <span className="sep">/</span>
             <span style={{ color: "var(--redekop-black)" }}>SCU</span>
           </div>
+          <img className="scu-wordmark" src="assets/scu/scu-wordmark.svg" alt="Redekop SCU" />
           <span className="eyebrow">Mechanical Weed Seed Control</span>
           <h1>
             <span className="l1">Crush Resistance</span>
@@ -692,9 +693,66 @@ function SCUFeatures() {
 }
 
 /* ---- 6. CTA / FORM ----------------------------------------------------- */
+/* HubSpot form this submits into (SCU page form, portal 49003392) */
+const SCU_HS = {
+  portalId: "49003392",
+  formId: "637fa77f-30bf-4296-9a3e-f6e3a7f64000",
+};
+const SCU_INTEREST_LABELS = {
+  info: "Get more info",
+  demo: "Book a demo",
+  quote: "Request a quote",
+  dealer: "Connect with a dealer",
+};
+
 function SCUForm() {
   const [interest, setInterest] = useStateSCU({ info: true, demo: false, quote: false, dealer: false });
   const toggle = (k) => setInterest((p) => ({ ...p, [k]: !p[k] }));
+
+  const [f, setF] = useStateSCU({
+    firstname: "", lastname: "", country: "", zip: "",
+    email: "", phone: "", combine: "",
+  });
+  const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }));
+  const [status, setStatus] = useStateSCU("idle");
+  const [errMsg, setErrMsg] = useStateSCU("");
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
+    setErrMsg("");
+
+    const interests = Object.keys(interest)
+      .filter((k) => interest[k])
+      .map((k) => SCU_INTEREST_LABELS[k]);
+
+    const extra = [];
+    extra.push("Product interest: Seed Control Unit (SCU)");
+    if (f.country) extra.push("Country: " + f.country);
+    if (f.zip) extra.push("Postal / ZIP: " + f.zip);
+    if (f.combine) extra.push("Combine: " + f.combine);
+    if (interests.length) extra.push("Interested in: " + interests.join(", "));
+    const composedMessage = extra.join("\n");
+
+    try {
+      await window.submitHubSpotForm({
+        portalId: SCU_HS.portalId,
+        formId: SCU_HS.formId,
+        fields: {
+          firstname: f.firstname,
+          lastname: f.lastname,
+          email: f.email,
+          phone: f.phone,
+          message: composedMessage,
+        },
+      });
+      setStatus("ok");
+    } catch (err) {
+      setStatus("error");
+      setErrMsg(err && err.message ? err.message : "Something went wrong.");
+    }
+  };
 
   return (
     <section className="scu-cta" id="contact" data-screen-label="06 Contact">
@@ -730,7 +788,16 @@ function SCUForm() {
           </div>
         </div>
 
-        <div className="form">
+        {status === "ok" ? (
+          <div className="form">
+            <span className="sec-idx on-dark">05 · Take Back Control</span>
+            <h2 style={{ marginTop: 10 }}>Thanks{f.firstname ? ", " + f.firstname : ""}.<br/><span className="y">We&apos;ve got it.</span></h2>
+            <p style={{ fontFamily: "var(--font-body)", color: "var(--ink-300, #cfcfcf)", lineHeight: 1.6, marginTop: 14 }}>
+              A member of our team will be in touch within one business day. For anything urgent, call us toll free at <a href="tel:18667333567" style={{ color: "var(--redekop-yellow)" }}>1-866-733-3567</a>.
+            </p>
+          </div>
+        ) : (
+        <form className="form" onSubmit={onSubmit}>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "var(--ink-400)", margin: "0 0 22px", letterSpacing: "0.06em" }}>
             <span style={{ color: "var(--redekop-yellow)" }}>*</span> indicates required fields
           </p>
@@ -738,18 +805,18 @@ function SCUForm() {
           <div className="form-row">
             <div className="field">
               <label>First Name <span className="req">*</span></label>
-              <input type="text" placeholder="" />
+              <input type="text" placeholder="" required value={f.firstname} onChange={set("firstname")} />
             </div>
             <div className="field">
               <label>Last Name</label>
-              <input type="text" placeholder="" />
+              <input type="text" placeholder="" value={f.lastname} onChange={set("lastname")} />
             </div>
           </div>
 
           <div className="form-row">
             <div className="field">
               <label>Country <span className="req">*</span></label>
-              <select defaultValue="">
+              <select required value={f.country} onChange={set("country")}>
                 <option value="" disabled>Select country</option>
                 <option>Canada</option>
                 <option>United States</option>
@@ -761,24 +828,24 @@ function SCUForm() {
             </div>
             <div className="field">
               <label>Postal / ZIP Code</label>
-              <input type="text" placeholder="" />
+              <input type="text" placeholder="" value={f.zip} onChange={set("zip")} />
             </div>
           </div>
 
           <div className="form-row">
             <div className="field">
               <label>Email <span className="req">*</span></label>
-              <input type="email" placeholder="" />
+              <input type="email" placeholder="" required value={f.email} onChange={set("email")} />
             </div>
             <div className="field">
               <label>Phone</label>
-              <input type="tel" placeholder="" />
+              <input type="tel" placeholder="" value={f.phone} onChange={set("phone")} />
             </div>
           </div>
 
           <div className="field">
             <label>Combine Make and Model <span className="req">*</span></label>
-            <input type="text" placeholder="e.g. John Deere X9 1100" />
+            <input type="text" placeholder="e.g. John Deere X9 1100" required value={f.combine} onChange={set("combine")} />
           </div>
 
           <div className="field">
@@ -792,14 +859,21 @@ function SCUForm() {
           </div>
 
           <div className="submit-row">
-            <button className="btn-redekop" onClick={(e) => e.preventDefault()} style={{ border: 0, cursor: "pointer" }}>
-              <span>Submit</span>
+            <button type="submit" className="btn-redekop" disabled={status === "sending"} style={{ border: 0, cursor: status === "sending" ? "default" : "pointer", opacity: status === "sending" ? 0.55 : 1 }}>
+              <span>{status === "sending" ? "Sending\u2026" : "Submit"}</span>
             </button>
             <span style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "var(--ink-400)", alignSelf: "center" }}>
               We'll be in touch within one business day.
             </span>
           </div>
-        </div>
+
+          {status === "error" && (
+            <p role="alert" style={{ marginTop: 16, fontFamily: "var(--font-body)", fontSize: 14, lineHeight: 1.5, color: "#ffb4b4" }}>
+              We couldn&apos;t send your message{errMsg ? " (" + errMsg + ")" : ""}. Please try again, or email <a href="mailto:sales@redekopmfg.com" style={{ color: "var(--redekop-yellow)", textDecoration: "underline" }}>sales@redekopmfg.com</a>.
+            </p>
+          )}
+        </form>
+        )}
       </div>
     </section>
   );
