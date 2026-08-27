@@ -3,9 +3,885 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Redekop KAS – Product Catalogue</title>
-<link rel="stylesheet" href="styles/redekop.css">
-<link rel="stylesheet" href="styles/site.css">
+<title>KAS Catalogue · Redekop KAS – Product Catalogue</title>
+<style>
+/* ============================================================
+   REDEKOP MANUFACTURING — COLORS & TYPE
+   ------------------------------------------------------------
+   Industrial agricultural equipment brand.
+   Hard-working, no-nonsense, built-for-the-field aesthetic.
+   ============================================================ */
+
+/* -------------------- FONTS -------------------- */
+/* Display: Bebas Neue (uploaded by client; used as substitute for Rift
+   which the production site loads from Adobe Fonts). Bebas matches the
+   tall, condensed, all-caps industrial feel of the Redekop wordmark. */
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("fonts/BebasNeue-Cyrillic.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Body: Open Sans via Google Fonts — matches site CSS `open-sans, sans-serif`. */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================================
+   COLOR TOKENS
+   ============================================================ */
+:root {
+  /* ---- Brand core ---- */
+  --redekop-black:        #231E20;   /* primary surface / wordmark — warm near-black */
+  --redekop-yellow:       #EEB94B;   /* signature CTA / accent / 8px left-bar */
+  --redekop-yellow-light: #F7D89D;   /* paired tint in the wordmark stripe */
+  --redekop-white:        #FFFFFF;
+
+  /* ---- Yellow scale (derived from #EEB94B) ---- */
+  --yellow-50:  #FDF6E5;
+  --yellow-100: #FBEACA;
+  --yellow-200: #F7D89D;   /* = redekop-yellow-light */
+  --yellow-300: #F2C674;
+  --yellow-400: #EEB94B;   /* brand */
+  --yellow-500: #D9A23A;
+  --yellow-600: #B2832B;
+  --yellow-700: #84621F;
+
+  /* ---- Neutrals (steel / shop floor) ---- */
+  --ink-900: #231E20;      /* same as brand black, semantic alias */
+  --ink-800: #2E2A2C;
+  --ink-700: #3E3A3C;
+  --ink-600: #524E50;
+  --ink-550: #3D3D3D;      /* legacy alias used in some component fills */
+  --ink-500: #6E6E6E;
+  --ink-400: #9A9A9A;
+  --ink-300: #C4C4C4;
+  --ink-200: #DDDDDD;      /* card borders on light */
+  --ink-100: #EEEEEE;      /* light panel bg */
+  --ink-50:  #F6F6F6;      /* page bg alt */
+
+  /* ---- Semantic accents (from production CSS) ---- */
+  --green-x9:    #108C28;  /* X9 SCU accent green — landing page H1 */
+  --warn:        #EEB94B;  /* shop-floor caution yellow (same as brand) */
+  --danger:      #C0392B;  /* error / stop */
+  --success:     #108C28;
+
+  /* ---- Foreground / background semantic ---- */
+  --bg:        var(--redekop-white);
+  --bg-alt:    var(--ink-50);
+  --bg-dark:   var(--redekop-black);
+  --bg-panel:  var(--ink-100);
+
+  --fg:        var(--redekop-black);
+  --fg-muted:  var(--ink-500);
+  --fg-on-dark: var(--redekop-white);
+  --fg-on-dark-muted: var(--ink-300);
+
+  --border:    var(--ink-200);
+  --border-strong: var(--ink-700);
+  --accent:    var(--redekop-yellow);
+
+  /* ---- Spacing scale ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ---- Radii — kept tight; this brand is hard-edged ---- */
+  --radius-0: 0px;         /* default for hero blocks, banners, cards */
+  --radius-1: 2px;         /* form inputs */
+  --radius-2: 4px;         /* small chips */
+  --radius-pill: 999px;    /* used only for tiny bullet dots */
+
+  /* ---- Elevation ---- */
+  --shadow-flat: 0 5px 0 rgba(0,0,0,0.06);            /* the signature flat drop, from .single cards */
+  --shadow-card: 0 2px 0 rgba(0,0,0,0.08), 0 0 0 1px var(--border);
+  --shadow-pop:  0 10px 24px rgba(0,0,0,0.18);
+
+  /* ---- Type system ---- */
+  --font-display: "Bebas Neue", "Rift", "Oswald", Impact, sans-serif;
+  --font-body:    "Open Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --leading-tight: 1.05;
+  --leading-snug:  1.2;
+  --leading-body:  1.6;
+
+  --tracking-wide:   0.04em;
+  --tracking-wider:  0.08em;
+  --tracking-widest: 0.16em;
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+}
+
+/* ============================================================
+   SEMANTIC TYPE
+   ------------------------------------------------------------
+   Display headings are TALL CONDENSED ALL-CAPS (Bebas/Rift).
+   Body copy is Open Sans, regular weight, 1.6 leading.
+   ============================================================ */
+
+.display-hero,
+h1.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(56px, 8vw, 120px);
+  line-height: 0.95;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin: 0;
+}
+
+.display-xl, h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(44px, 5.5vw, 70px);
+  line-height: 1;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-4) 0;
+}
+
+.display-lg, h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.display-md, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(24px, 2.4vw, 30px);
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.display-sm, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--redekop-yellow);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.lead {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--fg);
+}
+
+p, .body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: var(--leading-body);
+  color: var(--fg);
+  margin: 0 0 var(--space-4) 0;
+}
+
+.body-sm, small {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--fg-muted);
+}
+
+.caption {
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--ink-100);
+  padding: 2px 6px;
+  border-radius: var(--radius-1);
+}
+
+/* ============================================================
+   THE REDEKOP BUTTON
+   ------------------------------------------------------------
+   Black rectangle, white display-cased label, 8px yellow left bar
+   that wipes across on hover. Direct port of .btnnew from production.
+   ============================================================ */
+.btn-redekop {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--redekop-white);
+  background: var(--redekop-black);
+  padding: 16px 36px 14px 36px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  text-decoration: none;
+  overflow: hidden;
+  transition: box-shadow var(--duration-base) ease-in-out,
+              color var(--duration-base) ease-in-out;
+}
+.btn-redekop::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 8px;
+  background: var(--redekop-yellow);
+  transition: width var(--duration-base) ease;
+  z-index: 1;
+}
+.btn-redekop > * { position: relative; z-index: 2; }
+.btn-redekop:hover {
+  color: var(--redekop-black);
+  box-shadow: inset 600px 0 0 0 var(--redekop-yellow);
+}
+.btn-redekop.is-light {
+  background: var(--redekop-white);
+  color: var(--redekop-black);
+}
+.btn-redekop.is-light:hover {
+  color: var(--redekop-white);
+  box-shadow: inset 600px 0 0 0 var(--redekop-black);
+}
+.btn-redekop.is-light::before { background: var(--redekop-yellow); }
+
+</style>
+<style>
+/* ============================================================
+   REDEKOP SITE — shared chrome (header, footer, marquee,
+   product cards, hero, dealer, voice section, container, etc).
+   Loaded by every page on the site.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fff; color: var(--fg); }
+body { font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { font: inherit; }
+
+/* ----- Container ----- */
+.wrap { max-width: 1320px; margin: 0 auto; padding: 0 40px; }
+@media (max-width: 720px) { .wrap { padding: 0 22px; } }
+
+/* ----- Section index numerals ----- */
+.sec-idx {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--ink-400);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.sec-idx::after {
+  content: "";
+  display: inline-block;
+  width: 44px;
+  height: 1px;
+  background: var(--ink-300);
+}
+.sec-idx.on-dark { color: var(--yellow-400); }
+.sec-idx.on-dark::after { background: var(--yellow-700); }
+
+/* Yellow eyebrow */
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--redekop-yellow);
+  display: inline-block;
+}
+
+/* Yellow-dot bullet list (brand pattern) */
+.bullet-yellow { list-style: none; padding: 0; margin: 0; }
+.bullet-yellow li {
+  position: relative;
+  padding-left: 22px;
+  margin: 0 0 12px 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-700);
+}
+.bullet-yellow li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 9px;
+  width: 7px; height: 7px;
+  border-radius: 50px;
+  background: var(--redekop-yellow);
+}
+.bullet-yellow.on-dark li { color: var(--ink-300); }
+
+/* ----- Marquee ticker ----- */
+.marquee {
+  overflow: hidden;
+  border-top: 1px solid var(--redekop-black);
+  border-bottom: 1px solid var(--redekop-black);
+  background: var(--redekop-black);
+  color: var(--redekop-white);
+}
+.marquee-track {
+  display: flex;
+  gap: 60px;
+  padding: 18px 0;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+.marquee-item {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  white-space: nowrap;
+}
+.marquee-item .dot { width: 7px; height: 7px; border-radius: 50px; background: var(--redekop-yellow); }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ----- Product card ----- */
+.pcard {
+  background: #fff;
+  border: 1px solid var(--ink-200);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: box-shadow 280ms var(--ease-out), transform 280ms var(--ease-out);
+}
+.pcard:hover { box-shadow: var(--shadow-flat); transform: translateY(-2px); }
+.pcard .pcard-img {
+  position: relative;
+  background: var(--ink-50);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  border-bottom: 1px solid var(--ink-200);
+}
+.pcard .pcard-img img {
+  max-width: 78%;
+  max-height: 78%;
+  object-fit: contain;
+  transition: transform 500ms var(--ease-out);
+}
+.pcard:hover .pcard-img img { transform: scale(1.04); }
+.pcard .pcard-num {
+  position: absolute;
+  top: 14px; right: 16px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--ink-400);
+  letter-spacing: 0.16em;
+}
+.pcard .pcard-tag {
+  position: absolute;
+  top: 14px; left: 14px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--redekop-black);
+  background: var(--redekop-yellow);
+  padding: 4px 8px;
+}
+.pcard .pcard-body {
+  padding: 24px 24px 22px;
+  display: flex; flex-direction: column; flex: 1;
+  gap: 10px;
+}
+.pcard .pcard-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0;
+}
+.pcard .pcard-sub {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-600);
+  margin: 0;
+  flex: 1;
+}
+.pcard .pcard-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--redekop-black);
+  padding-top: 14px;
+  margin-top: 8px;
+  border-top: 1px solid var(--ink-200);
+  transition: color 200ms;
+}
+.pcard .pcard-cta .arrow {
+  width: 28px; height: 1px; background: var(--redekop-black);
+  position: relative; transition: width 220ms var(--ease-out), background 220ms;
+}
+.pcard .pcard-cta .arrow::after {
+  content: "";
+  position: absolute; right: 0; top: -3px;
+  width: 7px; height: 7px;
+  border-right: 1px solid var(--redekop-black);
+  border-top: 1px solid var(--redekop-black);
+  transform: rotate(45deg);
+}
+.pcard:hover .pcard-cta .arrow { width: 46px; background: var(--redekop-yellow); }
+.pcard:hover .pcard-cta .arrow::after { border-color: var(--redekop-yellow); }
+
+/* ----- Spec callout ----- */
+.spec {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.spec .num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 0.9;
+  color: var(--redekop-yellow);
+}
+.spec .num-sm { font-size: 44px; }
+.spec .sub {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--ink-300);
+  margin-top: 2px;
+}
+.spec .lbl {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink-300);
+  margin-top: 6px;
+}
+.spec .lbl-sm { font-size: 12px; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.topbar {
+  background: var(--redekop-black);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.topbar .wrap {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 8px; padding-bottom: 8px;
+  color: var(--ink-300);
+}
+.topbar a { color: var(--ink-300); transition: color 160ms; }
+.topbar a:hover { color: var(--redekop-yellow); }
+.topbar .right { display: flex; gap: 22px; align-items: center; }
+
+.nav {
+  background: #fff;
+  border-bottom: 1px solid var(--ink-200);
+  position: sticky; top: 0; z-index: 80;
+}
+.nav .wrap {
+  display: flex; align-items: center; gap: 32px;
+  padding-top: 26px; padding-bottom: 26px;
+}
+.nav-logo { flex: 0 0 auto; display: block; }
+.nav-logo img { height: 26px; width: auto; display: block; }
+.nav-items {
+  display: flex; gap: 22px; row-gap: 14px; margin-left: auto; align-items: center;
+  flex-wrap: wrap; justify-content: flex-end;
+  min-width: 0;
+}
+@media (max-width: 1180px) {
+  .nav .wrap { gap: 20px; }
+  .nav-items { gap: 16px; }
+  .nav-link { font-size: 11px; letter-spacing: 0.1em; }
+}
+@media (max-width: 900px) {
+  .nav-items { display: none; }
+  .nav-mobile-cta { display: inline-flex !important; }
+}
+.nav-link {
+  font-family: var(--font-body); font-weight: 700;
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-700);
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 160ms, border-color 160ms;
+  white-space: nowrap;
+}
+.nav-link:hover, .nav-link.is-active { color: var(--redekop-black); border-bottom-color: var(--redekop-yellow); }
+.nav-cta {
+  margin-left: 6px;
+  background: var(--redekop-black);
+  color: #fff;
+  padding: 10px 20px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: color 280ms;
+}
+.nav-cta::before {
+  content: "";
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 6px; background: var(--redekop-yellow);
+  transition: width 280ms var(--ease-out);
+}
+.nav-cta:hover { color: var(--redekop-black); }
+.nav-cta:hover::before { width: 100%; }
+.nav-cta span { position: relative; }
+
+/* ============================================================
+   HERO (homepage)
+   ============================================================ */
+.hero {
+  position: relative;
+  background: var(--redekop-black);
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero-img {
+  position: absolute; inset: 0;
+  background-image: url("../assets/imagery/combine-x9-field.jpg");
+  background-size: cover;
+  background-position: center 30%;
+  filter: contrast(1.08);
+}
+.hero-img::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(35,30,32,0.92) 0%, rgba(35,30,32,0.65) 45%, rgba(35,30,32,0.15) 100%);
+}
+.hero .wrap {
+  position: relative; z-index: 2;
+  padding-top: 110px; padding-bottom: 130px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--font-body); font-weight: 700;
+  font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--redekop-yellow);
+}
+.hero-eyebrow .bar { width: 32px; height: 2px; background: var(--redekop-yellow); }
+.hero-headline {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(64px, 9.5vw, 148px);
+  line-height: 0.88;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+.hero-headline .l2 { display: block; color: var(--redekop-yellow); }
+.hero-headline .slash { color: var(--redekop-yellow); font-weight: 400; }
+.hero-sub {
+  max-width: 560px;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-200);
+  margin: 4px 0 8px;
+}
+.hero-ctas { display: flex; gap: 18px; flex-wrap: wrap; }
+
+.hero-meta {
+  position: absolute;
+  right: 40px; bottom: 36px;
+  z-index: 3;
+  display: flex; gap: 48px;
+  align-items: flex-end;
+}
+@media (max-width: 900px) { .hero-meta { display: none; } }
+.hero-meta .item {
+  text-align: right;
+  font-family: var(--font-body);
+  color: #fff;
+}
+.hero-meta .item .k {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 1;
+  color: var(--redekop-yellow);
+}
+.hero-meta .item .v {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-300);
+  margin-top: 6px;
+}
+
+/* ============================================================
+   GENERIC SECTION + TITLE TYPE
+   ============================================================ */
+section { padding: 110px 0; }
+section.tight { padding: 80px 0; }
+section.dark { background: var(--redekop-black); color: #fff; }
+section.dark h2, section.dark h3 { color: #fff; }
+section.alt { background: var(--ink-50); }
+
+h2.section-title, h3.section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 0.96;
+  text-transform: uppercase;
+  margin: 18px 0 0;
+}
+h2.section-title { font-size: clamp(44px, 6vw, 88px); }
+h3.section-title { font-size: clamp(34px, 4vw, 56px); }
+
+.lead {
+  font-family: var(--font-body);
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+section.dark .lead { color: var(--ink-200); }
+
+/* ============================================================
+   OEM SHOWCASE (was X9 feature) — homepage section
+   ============================================================ */
+.x9 {
+  background: var(--redekop-black);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.x9-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+@media (max-width: 980px) { .x9-grid { grid-template-columns: 1fr; gap: 50px; } }
+.x9 .green-pill {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-body); font-weight: 700;
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: #fff;
+  background: #108C28;
+  padding: 6px 12px;
+}
+.x9-image {
+  background: #1a1517 url("../assets/imagery/combine-x9-yard.jpg") center/cover no-repeat;
+  aspect-ratio: 4 / 5;
+  position: relative;
+  filter: contrast(1.08);
+}
+.x9-image::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.55) 100%);
+}
+.x9-image .stamp {
+  position: absolute; left: 22px; bottom: 22px;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 78px; line-height: 0.9;
+  color: #fff; text-transform: uppercase;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.45);
+}
+.x9-image .stamp .accent { color: #2DD64B; }
+.x9-image .stripes {
+  position: absolute; top: 22px; right: 22px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.x9-image .stripes i {
+  display: block; width: 56px; height: 4px;
+  background: var(--redekop-yellow);
+}
+.x9-image .stripes i:nth-child(odd) { background: var(--yellow-200); }
+
+/* ============================================================
+   VOICE / ABOUT
+   ============================================================ */
+.voice-grid {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px;
+  align-items: start;
+}
+@media (max-width: 980px) { .voice-grid { grid-template-columns: 1fr; gap: 40px; } }
+.pull-quote {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0;
+}
+.pull-quote .y { color: var(--redekop-yellow); }
+.stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--ink-200);
+  border-bottom: 1px solid var(--ink-200);
+}
+@media (max-width: 720px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+.stats-row .cell {
+  padding: 32px 24px;
+  border-right: 1px solid var(--ink-200);
+}
+.stats-row .cell:last-child { border-right: 0; }
+@media (max-width: 720px) { .stats-row .cell:nth-child(2) { border-right: 0; } }
+.stats-row .k {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 56px; line-height: 1; color: var(--redekop-black);
+  margin-bottom: 8px;
+}
+.stats-row .k .small { font-size: 30px; color: var(--ink-400); margin-left: 4px; }
+.stats-row .lbl {
+  font-family: var(--font-body); font-weight: 700;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-500);
+}
+section.dark .stats-row { border-color: var(--ink-700); }
+section.dark .stats-row .cell { border-color: var(--ink-700); }
+section.dark .stats-row .k { color: #fff; }
+section.dark .stats-row .k .small { color: var(--ink-400); }
+section.dark .stats-row .lbl { color: var(--ink-400); }
+
+/* ============================================================
+   DEALER CTA STRIP
+   ============================================================ */
+.dealer {
+  position: relative;
+  background: var(--redekop-black);
+  color: #fff;
+  overflow: hidden;
+}
+.dealer-img {
+  position: absolute; inset: 0;
+  background-image: url("../assets/imagery/combine-x9-yard.jpg");
+  background-size: cover;
+  background-position: center 70%;
+  filter: contrast(1.05) brightness(0.55);
+}
+.dealer .wrap {
+  position: relative; z-index: 2;
+  padding-top: 100px; padding-bottom: 100px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: end;
+}
+@media (max-width: 900px) { .dealer .wrap { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer.f {
+  background: var(--redekop-black);
+  color: #fff;
+  padding: 80px 0 28px;
+  border-top: 6px solid var(--redekop-yellow);
+}
+footer.f .wrap { padding-top: 0; padding-bottom: 0; }
+.f-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; }
+@media (max-width: 900px) { .f-top { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 540px) { .f-top { grid-template-columns: 1fr; } }
+.f-col h5 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 16px; letter-spacing: 0.12em;
+  color: var(--redekop-yellow);
+  margin: 0 0 18px;
+}
+.f-col a {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink-300);
+  padding: 6px 0;
+  transition: color 160ms;
+}
+.f-col a:hover { color: var(--redekop-yellow); }
+.f-bottom {
+  margin-top: 60px;
+  padding-top: 22px;
+  border-top: 1px solid var(--ink-700);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  font-family: var(--font-body); font-size: 12px;
+  color: var(--ink-400);
+  letter-spacing: 0.04em;
+}
+
+/* Mobile tightening */
+@media (max-width: 720px) {
+  section { padding: 70px 0; }
+  .hero .wrap { padding-top: 70px; padding-bottom: 80px; }
+}
+
+</style>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 @font-face {
@@ -709,8 +1585,9 @@ body {
   line-height: 1.6;
   margin: 0;
 }
-/* Hide original embedded logo (we use top header) */
-.hero-logo { display: none; }
+.hero-logo { display: block; }
+.cat-standalone-logo { display: flex; align-items: center; gap: 20px; margin-bottom: 26px; }
+.cat-standalone-logo img { height: 34px; width: auto; display: block; }
 
 /* Hero meta cells */
 .hero-meta {
@@ -861,18 +1738,17 @@ body {
 </head>
 <body>
 
-<!-- Site-themed mini header -->
-<!-- Site Header (rendered by React from components/Header.jsx) -->
-<div id="site-header"></div>
+
 
 <!-- Hero -->
 <section class="hero">
   <div class="hero-corner-stripes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="hero-inner">
     <div class="hero-left">
+    <div class="cat-standalone-logo"><img src="data:image/png;base64,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" alt="Redekop Manufacturing" /></div>
       <div class="hero-breadcrumb">
-        <a href="index.html">Home</a> <span>/</span>
-        <a href="kas.html">KAS Pre-Cleaner</a> <span>/</span>
+        <a href="https://redekopmfg.com/" target="_blank" rel="noopener">Home</a> <span>/</span>
+        <a href="https://redekopmfg.com/kas-pre-cleaner/" target="_blank" rel="noopener">KAS Pre-Cleaner</a> <span>/</span>
         <span class="here">Catalogue</span>
       </div>
       <div class="hero-eyebrow">Agricultural Air Management Systems</div>
@@ -1938,8 +2814,7 @@ body {
 
 </div>
 
-<!-- Site Footer (rendered by React from components/Footer.jsx) -->
-<div id="site-footer"></div>
+
 
 <script>
 function showSection(id, btn) {
@@ -2111,16 +2986,6 @@ function showSection(id, btn) {
 })();
 </script>
 
-<!-- Site Header + Footer (React) -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script type="text/babel" src="components/Header.jsx"></script>
-<script type="text/babel" src="components/Footer.jsx"></script>
-<script type="text/babel">
-  ReactDOM.createRoot(document.getElementById("site-header")).render(<Header />);
-  ReactDOM.createRoot(document.getElementById("site-footer")).render(<Footer />);
-</script>
 
 <script>
 (function(){
