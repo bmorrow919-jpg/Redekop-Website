@@ -1,0 +1,137 @@
+/* ============================================================
+   SEEDING / SEEDMASTER PAGE — local styles
+   Follows the MAV/KAS vocabulary for visual continuity.
+   ============================================================ */
+
+/* ----- announcement strip ----- */
+.sd-announce { background: var(--redekop-black); border-bottom: 1px solid var(--ink-700); }
+.sd-announce .wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-top: 12px; padding-bottom: 12px; }
+.sd-announce .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--redekop-yellow); flex-shrink: 0; }
+.sd-announce .txt { font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #fff; }
+.sd-announce .lnk { margin-left: auto; font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--redekop-yellow); }
+.sd-announce .lnk:hover { color: var(--yellow-400, #FFC72C); }
+
+/* ============================================================
+   1. HERO
+   ============================================================ */
+.sd-hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 6px solid var(--redekop-yellow); background: var(--redekop-black); color: #fff; }
+.sd-hero-photo { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: 62% center; filter: contrast(1.08); }
+.sd-hero-scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(100deg, rgba(20,17,18,0.94) 0%, rgba(20,17,18,0.84) 34%, rgba(20,17,18,0.44) 62%, rgba(20,17,18,0.14) 100%); }
+.sd-hero .wrap { position: relative; z-index: 2; padding-top: 100px; padding-bottom: 96px; display: flex; flex-direction: column; gap: 24px; }
+
+.sd-crumbs { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.sd-crumbs a { color: var(--ink-400, #9A9A9A); }
+.sd-crumbs a:hover { color: var(--redekop-yellow); }
+.sd-crumbs span { color: var(--ink-600, #6E6E6E); }
+.sd-crumbs em { font-style: normal; color: var(--redekop-yellow); }
+
+.sd-eyebrow { display: flex; align-items: center; gap: 18px; font-family: var(--font-body); font-size: 15px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--redekop-yellow); }
+.sd-eyebrow .rule { width: 44px; height: 3px; background: var(--redekop-yellow); display: block; }
+
+/* Australia-exclusive badge */
+.sd-au { display: inline-flex; align-items: center; gap: 12px; padding: 9px 16px 9px 12px; border: 1px solid rgba(255,255,255,0.28); background: rgba(0,36,125,0.32); align-self: flex-start; }
+.sd-au .flag { display: block; width: 30px; flex-shrink: 0; line-height: 0; }
+.sd-au .flag svg { display: block; width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.4); }
+.sd-au .k { font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; }
+
+.sd-lockup-au { display: flex; align-items: center; gap: 12px; }
+.sd-lockup-au svg { display: block; width: 34px; height: auto; border: 1px solid rgba(255,255,255,0.4); flex-shrink: 0; }
+.sd-lockup-au span { font-family: var(--font-body); font-size: 11px; line-height: 1.45; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-400, #9A9A9A); }
+.sd-lockup-au strong { color: #fff; font-weight: 700; }
+
+.sd-hero h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(46px, 8vw, 124px); line-height: 0.88; letter-spacing: 0.005em; text-transform: uppercase; color: #fff; margin: 0; max-width: 16ch; }
+.sd-hero h1 .y { color: var(--redekop-yellow); }
+.sd-hero .lead { font-family: var(--font-body); font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--ink-200, #DDD); margin: 0; max-width: 48ch; text-wrap: pretty; }
+
+.sd-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+.sd-ctas .btn-redekop.is-ghost, .sd-cta-btns .btn-redekop.is-ghost { background: transparent; color: #fff; border: 1px solid var(--ink-400, #9A9A9A); border-left: 8px solid var(--redekop-yellow); }
+.sd-ctas .btn-redekop.is-ghost:hover, .sd-cta-btns .btn-redekop.is-ghost:hover { color: var(--redekop-black); box-shadow: inset 600px 0 0 0 var(--redekop-yellow); }
+
+.sd-lockup { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; margin-top: 18px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.18); max-width: 640px; }
+.sd-lockup img { height: 30px; display: block; width: auto; }
+.sd-lockup .bar { width: 1px; height: 34px; background: var(--ink-600, #6E6E6E); display: block; }
+
+/* ============================================================
+   2. WHY
+   ============================================================ */
+.sd-why { background: #fff; padding: 100px 0; }
+.sd-why .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.sd-why h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(34px, 4vw, 54px); line-height: 1.02; text-transform: uppercase; margin: 14px 0 20px; }
+.sd-why p { font-family: var(--font-body); font-size: 17px; line-height: 1.6; color: var(--ink-700, #3E3A3C); margin: 0 0 16px; text-wrap: pretty; }
+.sd-why p:last-child { margin-bottom: 0; }
+
+.sd-points { padding-top: 8px; display: flex; flex-direction: column; gap: 18px; }
+.sd-point { display: flex; gap: 20px; align-items: baseline; }
+.sd-point .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--redekop-yellow); flex-shrink: 0; }
+.sd-point .t { font-family: var(--font-body); font-weight: 700; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+.sd-point p { font-size: 16px; line-height: 1.6; color: var(--ink-600, #524E50); margin: 0; }
+
+/* ============================================================
+   3. AERIAL BAND
+   ============================================================ */
+.sd-band { position: relative; padding: 0; }
+.sd-band-photo { height: 56vh; min-height: 420px; background-size: cover; background-position: center; filter: contrast(1.08); }
+.sd-band-copy { background: var(--redekop-black); padding: 36px 0; }
+.sd-band-copy .wrap { display: flex; gap: 40px; align-items: baseline; flex-wrap: wrap; }
+.sd-band-copy .k { font-family: var(--font-body); font-weight: 600; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--yellow-400, #FFC72C); }
+.sd-band-copy p { font-family: var(--font-body); font-size: 17px; line-height: 1.6; color: var(--ink-300, #C4C4C4); margin: 0; max-width: 70ch; }
+
+/* ============================================================
+   4. LINEUP
+   ============================================================ */
+.sd-lines { background: var(--ink-50, #F6F6F6); padding: 100px 0; }
+.sd-lines-head { max-width: 720px; margin-bottom: 48px; }
+.sd-lines-head h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(34px, 4vw, 54px); line-height: 1.02; text-transform: uppercase; margin: 14px 0 0; }
+.sd-lines-note { display: flex; align-items: center; gap: 12px; font-family: var(--font-body); font-size: 14px; line-height: 1.5; color: var(--ink-600, #524E50); margin: 18px 0 0; }
+.sd-lines-note .flag { display: block; width: 28px; flex-shrink: 0; line-height: 0; }
+.sd-lines-note .flag svg { display: block; width: 100%; height: auto; border: 1px solid var(--ink-300, #C4C4C4); }
+.sd-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; align-items: stretch; }
+.sd-card { background: #fff; border: 1px solid var(--ink-200, #DDD); box-shadow: 0 5px 0 rgba(0,0,0,0.06); display: flex; flex-direction: column; }
+.sd-card .ph { height: 170px; background-size: cover; }
+.sd-card .bd { padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.sd-card .t { font-family: var(--font-body); font-weight: 600; font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; }
+.sd-card p { font-family: var(--font-body); font-size: 15px; line-height: 1.6; color: var(--ink-600, #524E50); margin: 0; flex: 1; }
+.sd-card a { font-family: var(--font-display); font-size: 18px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--redekop-black); border-bottom: 1px solid var(--redekop-yellow); align-self: flex-start; }
+.sd-card a:hover { color: var(--yellow-700, #B2832B); }
+
+/* ============================================================
+   5. DEALER CTA
+   ============================================================ */
+.sd-cta { background: var(--redekop-black); color: #fff; padding: 88px 0; }
+.sd-cta .wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 60px; align-items: center; }
+.sd-cta h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 3.6vw, 50px); line-height: 1.02; text-transform: uppercase; color: #fff; margin: 14px 0 18px; }
+.sd-cta p { font-family: var(--font-body); font-size: 17px; line-height: 1.6; color: var(--ink-300, #C4C4C4); margin: 0; max-width: 56ch; }
+.sd-cta-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* ============================================================
+   6. TRADEMARK STRIP
+   ============================================================ */
+.sd-tm { background: #000; padding: 34px 0; border-top: 1px solid var(--ink-800, #2E2A2C); }
+.sd-tm .wrap { display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; }
+.sd-tm-logos { display: flex; align-items: center; gap: 26px; }
+.sd-tm-logos img { height: 30px; display: block; width: auto; }
+.sd-tm-logos .bar { width: 1px; height: 34px; background: var(--ink-700, #3E3A3C); display: block; }
+.sd-tm p { font-family: var(--font-body); font-size: 12px; line-height: 1.6; color: var(--ink-600, #6E6E6E); margin: 0; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+  .sd-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 980px) {
+  .sd-why .wrap { grid-template-columns: 1fr; gap: 44px; }
+  .sd-cta .wrap { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 720px) {
+  .sd-why, .sd-lines { padding: 70px 0; }
+  .sd-cta { padding: 70px 0; }
+  .sd-hero .wrap { padding-top: 64px; padding-bottom: 64px; }
+  .sd-hero-photo { background-position: 70% center; }
+  .sd-band-photo { height: 40vh; min-height: 280px; }
+  .sd-announce .lnk { margin-left: 0; }
+}
+@media (max-width: 560px) {
+  .sd-grid { grid-template-columns: 1fr; }
+  .sd-tm .wrap { justify-content: flex-start; }
+}

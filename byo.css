@@ -1,0 +1,776 @@
+/* ============================================================
+   BUILD YOUR OWN — local styles
+   Two-path configurator landing page.
+   Modeled on About / MAV vocabulary.
+   ============================================================ */
+
+/* ============================================================
+   1. HERO
+   ============================================================ */
+.byo-hero {
+  position: relative;
+  background: var(--redekop-black);
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+  border-bottom: 6px solid var(--redekop-yellow);
+}
+.byo-hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  z-index: 0;
+  background-color: #1d191b;
+  background-image: url("../assets/imagery/combine-x9-field.jpg");
+  background-size: cover;
+  background-position: center 30%;
+  filter: contrast(1.08) saturate(0.95);
+  transform: scale(1.02);
+}
+.byo-hero::after {
+  content: "";
+  position: absolute; inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(35,30,32,0.92) 0%,
+      rgba(35,30,32,0.78) 50%,
+      rgba(35,30,32,0.45) 100%
+    ),
+    linear-gradient(180deg, rgba(35,30,32,0) 55%, rgba(35,30,32,0.55) 100%);
+  pointer-events: none;
+}
+.byo-hero .wrap {
+  position: relative; z-index: 2;
+  padding-top: 76px;
+  padding-bottom: 96px;
+  max-width: 1320px;
+}
+@media (max-width: 720px) { .byo-hero .wrap { padding-top: 56px; padding-bottom: 64px; } }
+
+.byo-hero .stripes-corner {
+  position: absolute;
+  top: 28px; right: 40px;
+  z-index: 3;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.byo-hero .stripes-corner i {
+  display: block; width: 56px; height: 5px; background: var(--redekop-yellow);
+}
+.byo-hero .stripes-corner i:nth-child(odd) { background: var(--yellow-200); }
+
+.byo-hero .breadcrumb {
+  font-family: var(--font-body);
+  font-weight: 700; font-size: 12px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-300);
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.byo-hero .breadcrumb a { color: var(--ink-300); }
+.byo-hero .breadcrumb a:hover { color: var(--redekop-yellow); }
+.byo-hero .breadcrumb .sep { color: var(--ink-600); }
+.byo-hero .breadcrumb .here { color: var(--redekop-yellow); }
+
+.byo-hero .product {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1; letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--redekop-yellow);
+  margin-bottom: 14px;
+}
+.byo-hero .product::before {
+  content: ""; display: inline-block;
+  width: 36px; height: 2px; background: var(--redekop-yellow);
+}
+
+.byo-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(56px, 8.5vw, 132px);
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 26px;
+  letter-spacing: -0.005em;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+  max-width: 980px;
+}
+.byo-hero h1 .y { color: var(--redekop-yellow); }
+.byo-hero h1 .slash { color: var(--redekop-yellow); font-weight: 400; margin: 0 8px; }
+
+.byo-hero p.sub {
+  font-family: var(--font-body);
+  font-size: 19px; line-height: 1.55;
+  color: var(--ink-200);
+  margin: 0 0 0;
+  max-width: 620px;
+}
+
+/* Inline meta strip below subhead */
+.byo-hero .meta {
+  margin-top: 36px;
+  display: flex; flex-wrap: wrap; gap: 40px;
+  border-top: 1px solid var(--ink-700);
+  padding-top: 28px;
+  max-width: 820px;
+}
+.byo-hero .meta .item .k {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 1;
+  color: var(--redekop-yellow);
+}
+.byo-hero .meta .item .lbl {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-300);
+  margin-top: 8px;
+}
+
+/* ============================================================
+   2. PATHS — the two CTAs (replacing the old form)
+   ============================================================ */
+.byo-paths {
+  background: var(--ink-50);
+  padding: 110px 0;
+}
+@media (max-width: 720px) { .byo-paths { padding: 70px 0; } }
+
+.byo-paths .head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+@media (max-width: 900px) { .byo-paths .head { grid-template-columns: 1fr; gap: 18px; margin-bottom: 36px; } }
+.byo-paths .head h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 5.4vw, 76px);
+  line-height: 0.96;
+  text-transform: uppercase;
+  margin: 18px 0 0;
+}
+.byo-paths .head h2 .y { color: var(--redekop-yellow); }
+.byo-paths .head .lead { max-width: 460px; color: var(--ink-600); }
+
+.byo-paths .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+@media (max-width: 900px) { .byo-paths .grid { grid-template-columns: 1fr; } }
+
+.path-card {
+  position: relative;
+  display: flex; flex-direction: column;
+  padding: 44px 44px 36px;
+  background: #fff;
+  border: 1px solid var(--ink-200);
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 460px;
+  transition: transform 320ms var(--ease-out), box-shadow 320ms var(--ease-out);
+}
+.path-card:hover { transform: translateY(-3px); box-shadow: 0 24px 48px rgba(0,0,0,0.12); }
+@media (max-width: 720px) { .path-card { padding: 32px 28px 28px; min-height: 380px; } }
+
+.path-card .num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  color: var(--ink-400);
+  margin-bottom: 18px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.path-card .num::after {
+  content: ""; display: inline-block;
+  width: 44px; height: 1px; background: var(--ink-300);
+}
+
+.path-card .badge {
+  position: absolute; top: 26px; right: 26px;
+  font-family: var(--font-body);
+  font-weight: 700; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 6px 10px;
+  background: var(--ink-100);
+  color: var(--ink-700);
+}
+.path-card.dealer .badge {
+  background: var(--redekop-yellow);
+  color: var(--redekop-black);
+}
+
+.path-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 3.6vw, 50px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+}
+.path-card.dealer h3 { color: #fff; }
+.path-card.dealer h3 .y { color: var(--redekop-yellow); }
+
+.path-card p.desc {
+  font-family: var(--font-body);
+  font-size: 16px; line-height: 1.6;
+  color: var(--ink-600);
+  margin: 0 0 24px;
+  max-width: 480px;
+}
+.path-card.dealer p.desc { color: var(--ink-300); }
+
+.path-card ul.feats {
+  list-style: none; padding: 0; margin: 0 0 32px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.path-card ul.feats li {
+  position: relative;
+  padding-left: 22px;
+  font-family: var(--font-body);
+  font-size: 14px; line-height: 1.5;
+  color: var(--ink-700);
+}
+.path-card.dealer ul.feats li { color: var(--ink-200); }
+.path-card ul.feats li::before {
+  content: ""; position: absolute;
+  left: 0; top: 9px;
+  width: 7px; height: 7px;
+  background: var(--redekop-yellow);
+  border-radius: 50px;
+}
+
+.path-card .action { margin-top: auto; }
+
+.path-card .meta-row {
+  display: flex; gap: 26px; flex-wrap: wrap;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--ink-200);
+}
+.path-card.dealer .meta-row { border-top-color: var(--ink-700); }
+.path-card .meta-row .m .v {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 22px; color: var(--redekop-black);
+  line-height: 1;
+}
+.path-card.dealer .meta-row .m .v { color: var(--redekop-yellow); }
+.path-card .meta-row .m .l {
+  font-family: var(--font-body); font-weight: 700;
+  font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--ink-500);
+  margin-top: 6px;
+}
+.path-card.dealer .meta-row .m .l { color: var(--ink-400); }
+
+/* Dealer (dark) variant */
+.path-card.dealer {
+  background: var(--redekop-black);
+  border-color: var(--redekop-black);
+  color: #fff;
+}
+.path-card.dealer .num { color: var(--ink-400); }
+.path-card.dealer .num::after { background: var(--ink-700); }
+
+/* Yellow accent bar on hover */
+.path-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  background: var(--redekop-yellow);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 380ms var(--ease-out);
+}
+.path-card:hover::before { transform: scaleY(1); }
+
+/* large arrow */
+.path-card .big-arrow {
+  position: absolute;
+  right: 32px; bottom: 36px;
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid var(--ink-300);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 320ms var(--ease-out);
+  opacity: 0.85;
+}
+.path-card.dealer .big-arrow { border-color: var(--ink-700); }
+.path-card:hover .big-arrow {
+  background: var(--redekop-yellow);
+  border-color: var(--redekop-yellow);
+  transform: rotate(-45deg) translateX(0);
+}
+.path-card .big-arrow svg {
+  width: 22px; height: 22px;
+  stroke: var(--ink-500);
+  transition: stroke 320ms var(--ease-out);
+}
+.path-card.dealer .big-arrow svg { stroke: var(--ink-300); }
+.path-card:hover .big-arrow svg { stroke: var(--redekop-black); }
+
+/* ============================================================
+   3. STEPS — how it works
+   ============================================================ */
+.byo-steps {
+  background: #fff;
+  padding: 120px 0;
+}
+@media (max-width: 720px) { .byo-steps { padding: 70px 0; } }
+.byo-steps .head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 64px;
+}
+@media (max-width: 900px) { .byo-steps .head { grid-template-columns: 1fr; gap: 18px; margin-bottom: 40px; } }
+.byo-steps .head h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 5.4vw, 76px);
+  line-height: 0.96;
+  text-transform: uppercase;
+  margin: 18px 0 0;
+}
+.byo-steps .head h2 .y { color: var(--redekop-yellow); }
+.byo-steps .head .lead { max-width: 460px; color: var(--ink-600); }
+
+.byo-steps .rail {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--ink-200);
+}
+@media (max-width: 980px) { .byo-steps .rail { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .byo-steps .rail { grid-template-columns: 1fr; } }
+.byo-steps .step {
+  padding: 36px 28px 36px 0;
+  border-right: 1px solid var(--ink-200);
+  position: relative;
+}
+.byo-steps .step:last-child { border-right: 0; }
+@media (max-width: 980px) {
+  .byo-steps .step:nth-child(2n) { border-right: 0; }
+  .byo-steps .step:nth-child(1), .byo-steps .step:nth-child(2) { border-bottom: 1px solid var(--ink-200); }
+}
+.byo-steps .step .num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 1;
+  color: var(--redekop-yellow);
+  margin: 6px 0 14px;
+}
+.byo-steps .step h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  text-transform: uppercase;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  margin: 0 0 10px;
+}
+.byo-steps .step p {
+  font-family: var(--font-body);
+  font-size: 14px; line-height: 1.6;
+  color: var(--ink-600);
+  margin: 0;
+  padding-right: 8px;
+}
+.byo-steps .step .tick {
+  position: absolute;
+  top: 0; left: 0;
+  width: 28px; height: 4px;
+  background: var(--redekop-yellow);
+}
+
+/* ============================================================
+   4. WHAT YOU CONFIGURE — brand + product tags
+   ============================================================ */
+.byo-what {
+  background: var(--ink-50);
+  padding: 120px 0;
+}
+@media (max-width: 720px) { .byo-what { padding: 70px 0; } }
+.byo-what .head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+@media (max-width: 900px) { .byo-what .head { grid-template-columns: 1fr; gap: 18px; margin-bottom: 40px; } }
+.byo-what .head h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 5.4vw, 76px);
+  line-height: 0.96;
+  text-transform: uppercase;
+  margin: 18px 0 0;
+}
+.byo-what .head h2 .y { color: var(--redekop-yellow); }
+.byo-what .head .lead { max-width: 460px; color: var(--ink-600); }
+
+.byo-what .grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 28px;
+}
+@media (max-width: 980px) { .byo-what .grid { grid-template-columns: 1fr; } }
+
+.byo-what .brands {
+  background: #fff;
+  border: 1px solid var(--ink-200);
+  padding: 36px 36px 28px;
+}
+.byo-what .brands h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-500);
+  margin: 0 0 22px;
+}
+.byo-what .brands .list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+@media (max-width: 720px) { .byo-what .brands .list { grid-template-columns: 1fr 1fr; } }
+.byo-what .brand {
+  background: var(--ink-50);
+  border: 1px solid var(--ink-200);
+  aspect-ratio: 5 / 3;
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.byo-what .brand .thumb {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0.35;
+  filter: grayscale(0.4);
+  transition: opacity 280ms, filter 280ms;
+}
+.byo-what .brand:hover .thumb { opacity: 0.55; filter: grayscale(0); }
+.byo-what .brand .name {
+  position: relative; z-index: 2;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--redekop-black);
+  background: rgba(255,255,255,0.85);
+  padding: 6px 10px;
+}
+
+.byo-what .products {
+  background: var(--redekop-black);
+  color: #fff;
+  padding: 36px 36px 32px;
+  display: flex; flex-direction: column;
+  gap: 16px;
+}
+.byo-what .products h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--redekop-yellow);
+  margin: 0 0 6px;
+}
+.byo-what .products .row {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 18px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--ink-700);
+}
+.byo-what .products .row:last-child { border-bottom: 0; }
+.byo-what .products .row .pname {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.byo-what .products .row .pdesc {
+  font-family: var(--font-body);
+  font-size: 13px; line-height: 1.5;
+  color: var(--ink-300);
+  margin-top: 6px;
+  max-width: 240px;
+}
+.byo-what .products .row .pcount {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--redekop-yellow);
+  white-space: nowrap;
+}
+.byo-what .products .row .pcount .u {
+  font-size: 11px; color: var(--ink-400);
+  letter-spacing: 0.18em;
+  margin-left: 4px;
+}
+
+/* ============================================================
+   5. DEALER BENEFITS
+   ============================================================ */
+.byo-dealer {
+  position: relative;
+  background: var(--redekop-black);
+  color: #fff;
+  overflow: hidden;
+  padding: 0;
+}
+.byo-dealer::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: url("../assets/imagery/combine-x9-yard.jpg");
+  background-size: cover;
+  background-position: center 60%;
+  filter: contrast(1.05) brightness(0.45) saturate(0.7);
+  z-index: 0;
+}
+.byo-dealer::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(35,30,32,0.95) 0%, rgba(35,30,32,0.75) 60%, rgba(35,30,32,0.4) 100%);
+  z-index: 1;
+}
+.byo-dealer .wrap {
+  position: relative; z-index: 2;
+  padding-top: 110px; padding-bottom: 110px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .byo-dealer .wrap { grid-template-columns: 1fr; gap: 40px; padding-top: 70px; padding-bottom: 70px; }
+}
+.byo-dealer .copy .eyebrow {
+  color: var(--redekop-yellow);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: block;
+}
+.byo-dealer h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 5.4vw, 72px);
+  line-height: 0.96;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 22px;
+}
+.byo-dealer h2 .y { color: var(--redekop-yellow); }
+.byo-dealer p {
+  font-family: var(--font-body);
+  font-size: 18px; line-height: 1.6;
+  color: var(--ink-200);
+  margin: 0 0 28px;
+  max-width: 560px;
+}
+.byo-dealer .ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+.byo-dealer .benefits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--ink-700);
+  border-left: 1px solid var(--ink-700);
+}
+.byo-dealer .benefits .cell {
+  padding: 26px 24px;
+  border-right: 1px solid var(--ink-700);
+  border-bottom: 1px solid var(--ink-700);
+  background: rgba(35,30,32,0.55);
+  backdrop-filter: blur(2px);
+}
+.byo-dealer .benefits .cell h5 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  text-transform: uppercase;
+  color: var(--redekop-yellow);
+  margin: 0 0 10px;
+  line-height: 1;
+}
+.byo-dealer .benefits .cell p {
+  font-family: var(--font-body);
+  font-size: 13px; line-height: 1.55;
+  color: var(--ink-200);
+  margin: 0;
+}
+
+/* Ghost button on dark — for secondary CTAs over dark imagery/black sections */
+.btn-redekop.is-ghost-dark {
+  background: transparent;
+  color: #fff;
+  padding: 14px 34px 12px 34px;
+  border: 2px solid #fff;
+}
+.btn-redekop.is-ghost-dark::before { background: #fff; width: 0; }
+.btn-redekop.is-ghost-dark:hover {
+  color: var(--redekop-black);
+  box-shadow: inset 600px 0 0 0 #fff;
+}
+
+/* ============================================================
+   6. FAQ
+   ============================================================ */
+.byo-faq {
+  background: #fff;
+  padding: 120px 0;
+}
+@media (max-width: 720px) { .byo-faq { padding: 70px 0; } }
+.byo-faq .head { margin-bottom: 48px; max-width: 720px; }
+.byo-faq .head h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 5.4vw, 72px);
+  line-height: 0.96;
+  text-transform: uppercase;
+  margin: 18px 0 0;
+}
+.byo-faq .head h2 .y { color: var(--redekop-yellow); }
+.byo-faq .list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--ink-200);
+}
+@media (max-width: 760px) { .byo-faq .list { grid-template-columns: 1fr; } }
+.byo-faq .q {
+  padding: 28px 32px 28px 0;
+  border-bottom: 1px solid var(--ink-200);
+  border-right: 1px solid var(--ink-200);
+  padding-left: 0;
+}
+.byo-faq .q:nth-child(2n) { border-right: 0; padding-left: 32px; }
+@media (max-width: 760px) {
+  .byo-faq .q { border-right: 0; padding-left: 0 !important; padding-right: 0; }
+}
+.byo-faq .q h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+  display: flex; align-items: baseline; gap: 14px;
+}
+.byo-faq .q h4 .n {
+  font-size: 13px;
+  color: var(--ink-400);
+  letter-spacing: 0.18em;
+}
+.byo-faq .q p {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-600);
+  margin: 0;
+}
+
+/* ============================================================
+   7. FINAL CTA
+   ============================================================ */
+.byo-cta {
+  background: var(--redekop-yellow);
+  color: var(--redekop-black);
+  padding: 90px 0;
+  position: relative;
+  overflow: hidden;
+}
+.byo-cta::before {
+  content: "BUILD";
+  position: absolute;
+  right: -40px; bottom: -30px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(160px, 24vw, 360px);
+  line-height: 0.8;
+  color: rgba(35,30,32,0.06);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.byo-cta .wrap {
+  position: relative; z-index: 2;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 900px) { .byo-cta .wrap { grid-template-columns: 1fr; gap: 28px; } }
+.byo-cta h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 5.4vw, 72px);
+  line-height: 0.96;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+  color: var(--redekop-black);
+}
+.byo-cta p {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  margin: 0;
+  color: var(--ink-800);
+  max-width: 480px;
+}
+.byo-cta .ctas {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  justify-content: flex-end;
+}
+@media (max-width: 900px) { .byo-cta .ctas { justify-content: flex-start; } }
+
+/* on yellow we override button looks */
+.byo-cta .btn-redekop {
+  background: var(--redekop-black);
+  color: #fff;
+}
+.byo-cta .btn-redekop::before {
+  background: #fff;
+}
+.byo-cta .btn-redekop:hover {
+  color: var(--redekop-black);
+  box-shadow: inset 600px 0 0 0 #fff;
+}
+.byo-cta .btn-redekop.is-light {
+  background: transparent;
+  color: var(--redekop-black);
+  border: 2px solid var(--redekop-black);
+  padding: 14px 34px 12px 34px;
+}
+.byo-cta .btn-redekop.is-light::before { background: var(--redekop-black); width: 0; }
+.byo-cta .btn-redekop.is-light:hover {
+  color: #fff;
+  box-shadow: inset 600px 0 0 0 var(--redekop-black);
+}

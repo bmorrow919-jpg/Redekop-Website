@@ -1,0 +1,279 @@
+/* ============================================================
+   REDEKOP MANUFACTURING — COLORS & TYPE
+   ------------------------------------------------------------
+   Industrial agricultural equipment brand.
+   Hard-working, no-nonsense, built-for-the-field aesthetic.
+   ============================================================ */
+
+/* -------------------- FONTS -------------------- */
+/* Display: Bebas Neue (uploaded by client; used as substitute for Rift
+   which the production site loads from Adobe Fonts). Bebas matches the
+   tall, condensed, all-caps industrial feel of the Redekop wordmark. */
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("fonts/BebasNeue-Cyrillic.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Body: Open Sans via Google Fonts — matches site CSS `open-sans, sans-serif`. */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ============================================================
+   COLOR TOKENS
+   ============================================================ */
+:root {
+  /* ---- Brand core ---- */
+  --redekop-black:        #231E20;   /* primary surface / wordmark — warm near-black */
+  --redekop-yellow:       #EEB94B;   /* signature CTA / accent / 8px left-bar */
+  --redekop-yellow-light: #F7D89D;   /* paired tint in the wordmark stripe */
+  --redekop-white:        #FFFFFF;
+
+  /* ---- Yellow scale (derived from #EEB94B) ---- */
+  --yellow-50:  #FDF6E5;
+  --yellow-100: #FBEACA;
+  --yellow-200: #F7D89D;   /* = redekop-yellow-light */
+  --yellow-300: #F2C674;
+  --yellow-400: #EEB94B;   /* brand */
+  --yellow-500: #D9A23A;
+  --yellow-600: #B2832B;
+  --yellow-700: #84621F;
+
+  /* ---- Neutrals (steel / shop floor) ---- */
+  --ink-900: #231E20;      /* same as brand black, semantic alias */
+  --ink-800: #2E2A2C;
+  --ink-700: #3E3A3C;
+  --ink-600: #524E50;
+  --ink-550: #3D3D3D;      /* legacy alias used in some component fills */
+  --ink-500: #6E6E6E;
+  --ink-400: #9A9A9A;
+  --ink-300: #C4C4C4;
+  --ink-200: #DDDDDD;      /* card borders on light */
+  --ink-100: #EEEEEE;      /* light panel bg */
+  --ink-50:  #F6F6F6;      /* page bg alt */
+
+  /* ---- Semantic accents (from production CSS) ---- */
+  --green-x9:    #108C28;  /* X9 SCU accent green — landing page H1 */
+  --warn:        #EEB94B;  /* shop-floor caution yellow (same as brand) */
+  --danger:      #C0392B;  /* error / stop */
+  --success:     #108C28;
+
+  /* ---- Foreground / background semantic ---- */
+  --bg:        var(--redekop-white);
+  --bg-alt:    var(--ink-50);
+  --bg-dark:   var(--redekop-black);
+  --bg-panel:  var(--ink-100);
+
+  --fg:        var(--redekop-black);
+  --fg-muted:  var(--ink-500);
+  --fg-on-dark: var(--redekop-white);
+  --fg-on-dark-muted: var(--ink-300);
+
+  --border:    var(--ink-200);
+  --border-strong: var(--ink-700);
+  --accent:    var(--redekop-yellow);
+
+  /* ---- Spacing scale ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ---- Radii — kept tight; this brand is hard-edged ---- */
+  --radius-0: 0px;         /* default for hero blocks, banners, cards */
+  --radius-1: 2px;         /* form inputs */
+  --radius-2: 4px;         /* small chips */
+  --radius-pill: 999px;    /* used only for tiny bullet dots */
+
+  /* ---- Elevation ---- */
+  --shadow-flat: 0 5px 0 rgba(0,0,0,0.06);            /* the signature flat drop, from .single cards */
+  --shadow-card: 0 2px 0 rgba(0,0,0,0.08), 0 0 0 1px var(--border);
+  --shadow-pop:  0 10px 24px rgba(0,0,0,0.18);
+
+  /* ---- Type system ---- */
+  --font-display: "Bebas Neue", "Rift", "Oswald", Impact, sans-serif;
+  --font-body:    "Open Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --leading-tight: 1.05;
+  --leading-snug:  1.2;
+  --leading-body:  1.6;
+
+  --tracking-wide:   0.04em;
+  --tracking-wider:  0.08em;
+  --tracking-widest: 0.16em;
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+}
+
+/* ============================================================
+   SEMANTIC TYPE
+   ------------------------------------------------------------
+   Display headings are TALL CONDENSED ALL-CAPS (Bebas/Rift).
+   Body copy is Open Sans, regular weight, 1.6 leading.
+   ============================================================ */
+
+.display-hero,
+h1.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(56px, 8vw, 120px);
+  line-height: 0.95;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin: 0;
+}
+
+.display-xl, h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(44px, 5.5vw, 70px);
+  line-height: 1;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-4) 0;
+}
+
+.display-lg, h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.display-md, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(24px, 2.4vw, 30px);
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0 0 var(--space-3) 0;
+}
+
+.display-sm, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 0 var(--space-2) 0;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--redekop-yellow);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.lead {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--fg);
+}
+
+p, .body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: var(--leading-body);
+  color: var(--fg);
+  margin: 0 0 var(--space-4) 0;
+}
+
+.body-sm, small {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--fg-muted);
+}
+
+.caption {
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--ink-100);
+  padding: 2px 6px;
+  border-radius: var(--radius-1);
+}
+
+/* ============================================================
+   THE REDEKOP BUTTON
+   ------------------------------------------------------------
+   Black rectangle, white display-cased label, 8px yellow left bar
+   that wipes across on hover. Direct port of .btnnew from production.
+   ============================================================ */
+.btn-redekop {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--redekop-white);
+  background: var(--redekop-black);
+  padding: 16px 36px 14px 36px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  text-decoration: none;
+  overflow: hidden;
+  transition: box-shadow var(--duration-base) ease-in-out,
+              color var(--duration-base) ease-in-out;
+}
+.btn-redekop::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 8px;
+  background: var(--redekop-yellow);
+  transition: width var(--duration-base) ease;
+  z-index: 1;
+}
+.btn-redekop > * { position: relative; z-index: 2; }
+.btn-redekop:hover {
+  color: var(--redekop-black);
+  box-shadow: inset 600px 0 0 0 var(--redekop-yellow);
+}
+.btn-redekop.is-light {
+  background: var(--redekop-white);
+  color: var(--redekop-black);
+}
+.btn-redekop.is-light:hover {
+  color: var(--redekop-white);
+  box-shadow: inset 600px 0 0 0 var(--redekop-black);
+}
+.btn-redekop.is-light::before { background: var(--redekop-yellow); }
