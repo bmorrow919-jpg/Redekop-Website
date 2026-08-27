@@ -252,11 +252,18 @@ button { font: inherit; }
 .topbar .right { display: flex; gap: 22px; align-items: center; }
 
 .nav {
-  background: #fff;
-  border-bottom: 1px solid var(--ink-200);
+  background: var(--redekop-black);
+  border-bottom: 1px solid #2E2A2C;
   position: sticky; top: 0; z-index: 80;
 }
+/* Yellow rule across the top of the header — the underline from the Redekop mark */
+.nav::before {
+  content: "";
+  position: absolute; left: 0; right: 0; top: 0;
+  height: 4px; background: var(--redekop-yellow);
+}
 .nav .wrap {
+  position: relative;
   display: flex; align-items: center; gap: 32px;
   padding-top: 26px; padding-bottom: 26px;
 }
@@ -279,18 +286,21 @@ button { font: inherit; }
 .nav-link {
   font-family: var(--font-body); font-weight: 700;
   font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--ink-700);
+  color: var(--redekop-yellow);
   padding: 6px 0;
-  border-bottom: 2px solid transparent;
+  border-top: 2px solid transparent;
   cursor: pointer;
   transition: color 160ms, border-color 160ms;
   white-space: nowrap;
 }
-.nav-link:hover, .nav-link.is-active { color: var(--redekop-black); border-bottom-color: var(--redekop-yellow); }
+.nav-link:hover, .nav-link.is-active { color: #fff; border-top-color: var(--redekop-yellow); }
+/* Secondary yellow — the paired tint from the wordmark stripe */
+.nav-link.is-alt { color: var(--redekop-yellow-light); }
+.nav-link.is-alt:hover, .nav-link.is-alt.is-active { color: #fff; }
 .nav-cta {
   margin-left: 6px;
-  background: var(--redekop-black);
-  color: #fff;
+  background: #fff;
+  color: var(--redekop-black);
   padding: 10px 20px;
   font-family: var(--font-display);
   font-weight: 700;

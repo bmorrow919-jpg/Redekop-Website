@@ -21,6 +21,7 @@ function Header() {
       { label: "Warranty", href: "warranty.html" },
     ] },
     { key: "about", label: "About", href: "about.html" },
+    { key: "careers", label: "Careers", href: "careers-v2.html" },
   ];
 
   return (
@@ -39,7 +40,7 @@ function Header() {
       <header className="nav">
         <div className="wrap">
           <a href="index.html" className="nav-logo" aria-label="Redekop home">
-            <img src="assets/logos/redekop-on-white.png" alt="Redekop Manufacturing" />
+            <img src="assets/logos/redekop-on-black.png" alt="Redekop Manufacturing" />
           </a>
           <nav className="nav-items">
             {items.map((it) => (
@@ -49,7 +50,7 @@ function Header() {
                 onMouseEnter={() => it.menu && setOpen(it.key)}
                 onMouseLeave={() => setOpen(null)}
               >
-                <a href={it.href || "#"} className={"nav-link" + (open === it.key ? " is-active" : "")} onClick={(e) => { if (!it.href) e.preventDefault(); }}>
+                <a href={it.href || "#"} className={"nav-link" + (it.key === "byo" || it.key === "about" ? " is-alt" : "") + (open === it.key ? " is-active" : "")} onClick={(e) => { if (!it.href) e.preventDefault(); }}>
                   {it.label}
                 </a>
                 {open === it.key && it.menu && (
@@ -57,7 +58,8 @@ function Header() {
                     position: "absolute", top: "100%", left: -16,
                     background: "var(--redekop-black)", color: "#fff",
                     minWidth: 240, padding: "12px 0",
-                    boxShadow: "0 12px 28px rgba(0,0,0,0.2)",
+                    borderTop: "3px solid var(--redekop-yellow)",
+                    boxShadow: "0 12px 28px rgba(0,0,0,0.4)",
                     zIndex: 90,
                   }}>
                     {it.menu.map((m, i) => (
@@ -82,8 +84,8 @@ function Header() {
           <button className="nav-mobile-cta" aria-label="Open menu" style={{
             display: "none",
             marginLeft: "auto",
-            background: "var(--redekop-black)",
-            color: "#fff",
+            background: "var(--redekop-yellow)",
+            color: "var(--redekop-black)",
             border: 0,
             padding: "12px 20px",
             fontFamily: "var(--font-display)",
@@ -95,7 +97,7 @@ function Header() {
             position: "relative",
             overflow: "hidden",
           }}>
-            <span style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 6, background: "var(--redekop-yellow)" }}></span>
+            <span style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 6, background: "var(--redekop-black)" }}></span>
             <span style={{ position: "relative", paddingLeft: 4 }}>Menu</span>
           </button>
         </div>
